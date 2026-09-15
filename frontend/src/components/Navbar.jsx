@@ -45,29 +45,18 @@ const NavigationBar = ({ onOpenAdmin }) => {
       className={`navbar-glass py-2 py-lg-3 ${scrolled ? "shadow-sm" : ""}`}
     >
       <Container className="d-flex align-items-center justify-content-between">
-        {/* Brand Logo & Name */}
-        <Navbar.Brand href="#home" className="d-flex align-items-center gap-2 m-0 p-0">
+        {/* Brand Logo */}
+        <Navbar.Brand href="#home" className="d-flex align-items-center m-0 p-0">
           <img
-            src="/logo.png"
+            src="/logo-horizontal.png"
             alt="Krsh Innovations"
             style={{
-              height: "44px",
-              width: "44px",
-              objectFit: "contain",
-              borderRadius: "10px",
-              background: "#ffffff",
-              padding: "2px",
-              boxShadow: "0 2px 8px rgba(0, 162, 234, 0.25)"
+              height: "46px",
+              width: "auto",
+              maxWidth: "230px",
+              objectFit: "contain"
             }}
           />
-          <div className="d-flex flex-column">
-            <span className="brand-text fw-bold fs-5 text-dark" style={{ lineHeight: "1.1", letterSpacing: "-0.5px" }}>
-              Krsh.<span style={{ color: "#00a2ea" }}>Innovations</span>
-            </span>
-            <span className="text-muted fw-semibold" style={{ fontSize: "10px", letterSpacing: "0.8px", textTransform: "uppercase" }}>
-              IT & Startup Studio
-            </span>
-          </div>
         </Navbar.Brand>
 
         {/* Mobile Toggler */}

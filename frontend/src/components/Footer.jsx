@@ -30,28 +30,18 @@ const Footer = ({ onOpenAdmin }) => {
         <Row className="gy-4 mb-5">
           {/* Brand & Mission */}
           <Col lg={4} md={6}>
-            <div className="d-flex align-items-center gap-3 mb-3">
+            <div className="d-inline-block bg-white px-3 py-2 rounded-3 mb-3 shadow-sm">
               <img
-                src="/logo.png"
+                src="/logo-horizontal.png"
                 alt="Krsh Innovations"
                 style={{
-                  height: "48px",
-                  width: "48px",
+                  height: "40px",
+                  width: "auto",
+                  maxWidth: "220px",
                   objectFit: "contain",
-                  borderRadius: "10px",
-                  background: "#ffffff",
-                  padding: "3px",
-                  boxShadow: "0 4px 12px rgba(0,0,0,0.2)"
+                  display: "block"
                 }}
               />
-              <div>
-                <h5 className="fw-bold text-white mb-0" style={{ letterSpacing: "-0.5px" }}>
-                  Krsh.<span style={{ color: "#00a2ea" }}>Innovations</span>
-                </h5>
-                <div className="text-info fw-semibold" style={{ fontSize: "11px", letterSpacing: "1px", textTransform: "uppercase" }}>
-                  IT & Startup Studio
-                </div>
-              </div>
             </div>
 
             <p className="text-secondary small mb-3" style={{ lineHeight: 1.7 }}>

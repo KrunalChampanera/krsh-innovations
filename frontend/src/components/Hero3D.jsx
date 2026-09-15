@@ -203,30 +203,22 @@ const Hero3D = ({ onGetStarted }) => {
                   {/* Brand & Studio Architecture Banner */}
                   <div className="d-flex align-items-center justify-content-between mb-3 pb-3 border-bottom border-secondary border-opacity-25 flex-wrap gap-2">
                     <div className="d-flex align-items-center gap-3">
-                      <img
-                        src="/logo.png"
-                        alt="Krsh Innovations"
-                        style={{
-                          width: "48px",
-                          height: "48px",
-                          objectFit: "cover",
-                          borderRadius: "12px",
-                          background: "#ffffff",
-                          padding: "2px",
-                          boxShadow: "0 4px 14px rgba(0, 162, 234, 0.4)"
-                        }}
-                      />
-                      <div>
-                        <div className="fw-bold text-white fs-6 d-flex align-items-center gap-2">
-                          <span>Krsh.<span style={{ color: "#00a2ea" }}>Innovations</span></span>
-                          <span className="badge bg-primary bg-opacity-25 text-primary border border-primary border-opacity-25 rounded-pill px-2 py-0" style={{ fontSize: "9px" }}>
-                            VERIFIED STUDIO
-                          </span>
-                        </div>
-                        <div className="text-secondary" style={{ fontSize: "11px" }}>
-                          Full-Stack Web • Mobile Apps • Custom Cloud Architecture
-                        </div>
+                      <div className="bg-white px-3 py-2 rounded-3 shadow-sm d-flex align-items-center">
+                        <img
+                          src="/logo-horizontal.png"
+                          alt="Krsh Innovations"
+                          style={{
+                            height: "36px",
+                            width: "auto",
+                            maxWidth: "200px",
+                            objectFit: "contain",
+                            display: "block"
+                          }}
+                        />
                       </div>
+                      <span className="badge bg-primary bg-opacity-25 text-primary border border-primary border-opacity-25 rounded-pill px-2 py-1" style={{ fontSize: "10px" }}>
+                        VERIFIED STUDIO
+                      </span>
                     </div>
 
                     <div className="text-end d-none d-sm-block">

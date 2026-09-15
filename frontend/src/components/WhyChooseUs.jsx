@@ -75,14 +75,11 @@ const WhyChooseUs = () => {
                 <div className="d-flex align-items-center justify-content-between pb-2 mb-3 border-bottom">
                   <div className="d-flex align-items-center gap-2">
                     <img
-                      src="/logo.png"
-                      alt="KI"
-                      style={{ width: "26px", height: "26px", objectFit: "contain", borderRadius: "6px", background: "#fff" }}
+                      src="/logo-horizontal.png"
+                      alt="Krsh Innovations"
+                      style={{ height: "20px", width: "auto", objectFit: "contain" }}
                     />
-                    <div>
-                      <div className="fw-bold" style={{ fontSize: "11px" }}>Krsh Innovations</div>
-                      <div className="text-success" style={{ fontSize: "9px" }}>● Active Engineering</div>
-                    </div>
+                    <div className="text-success small ms-1" style={{ fontSize: "9px" }}>● Active Engineering</div>
                   </div>
                   <Sparkles size={14} className="text-primary" />
                 </div>

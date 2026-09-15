@@ -316,27 +316,22 @@ const AdminDashboard = ({ onBackToSite, dbStatus }) => {
         }}
       >
         <div>
-          <div className="d-flex align-items-center gap-3 pb-3 mb-4 border-bottom border-secondary border-opacity-25">
-            <img
-              src="/logo.png"
-              alt="Krsh Innovations"
-              style={{
-                height: "44px",
-                width: "44px",
-                objectFit: "contain",
-                borderRadius: "10px",
-                background: "#ffffff",
-                padding: "2px",
-                boxShadow: "0 2px 8px rgba(0,0,0,0.3)"
-              }}
-            />
-            <div>
-              <div className="fw-bold text-white" style={{ fontSize: "1.05rem", letterSpacing: "-0.4px" }}>
-                Krsh.<span style={{ color: "#00a2ea" }}>Innovations</span>
-              </div>
-              <div className="small text-info fw-semibold" style={{ fontSize: "0.75rem" }}>
-                Super Admin Panel
-              </div>
+          <div className="pb-3 mb-4 border-bottom border-secondary border-opacity-25">
+            <div className="bg-white px-3 py-2 rounded-3 shadow-sm mb-2 d-flex align-items-center justify-content-center">
+              <img
+                src="/logo-horizontal.png"
+                alt="Krsh Innovations"
+                style={{
+                  height: "36px",
+                  width: "auto",
+                  maxWidth: "180px",
+                  objectFit: "contain",
+                  display: "block"
+                }}
+              />
+            </div>
+            <div className="small text-info fw-semibold text-center" style={{ fontSize: "0.75rem", letterSpacing: "1px" }}>
+              SUPER ADMIN PANEL
             </div>
           </div>
 
