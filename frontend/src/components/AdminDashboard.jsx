@@ -333,14 +333,15 @@ const AdminDashboard = ({ onBackToSite, dbStatus }) => {
             </div>
           </div>
 
-          <Button
-            variant="outline-light"
-            onClick={onBackToSite}
-            className="w-100 d-flex align-items-center justify-content-center gap-2 rounded-pill py-2 fw-semibold border-secondary"
+          <a
+            href="http://localhost:5180"
+            target="_blank"
+            rel="noreferrer"
+            className="btn btn-outline-light w-100 d-flex align-items-center justify-content-center gap-2 rounded-pill py-2 fw-semibold border-secondary text-decoration-none"
           >
             <ArrowLeft size={16} />
-            <span>Back to Public Website</span>
-          </Button>
+            <span>View Public Website (5180)</span>
+          </a>
         </div>
       </div>
 

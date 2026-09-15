@@ -342,15 +342,15 @@ const PortfolioGallery = ({ onOpenAdmin, refreshTrigger }) => {
             ))}
           </div>
 
-          <Button
-            variant="outline-primary"
-            size="sm"
-            className="rounded-pill px-3 py-2 d-flex align-items-center gap-2 fw-semibold shadow-sm"
-            onClick={onOpenAdmin}
+          <a
+            href="http://localhost:5181"
+            target="_blank"
+            rel="noreferrer"
+            className="btn btn-outline-primary btn-sm rounded-pill px-3 py-2 d-flex align-items-center gap-2 fw-semibold shadow-sm text-decoration-none"
           >
             <PlusCircle size={16} />
-            <span>Manage Gallery (Admin)</span>
-          </Button>
+            <span>Manage Gallery (Admin 5181)</span>
+          </a>
         </div>
 
         {/* Dynamic Project Cards Grid */}

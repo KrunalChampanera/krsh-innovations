@@ -52,8 +52,7 @@ function App() {
   }, []);
 
   const handleOpenAdmin = () => {
-    window.location.hash = "#admin";
-    setCurrentView("admin");
+    window.open("http://localhost:5181", "_blank");
   };
 
   const handleBackToSite = () => {
@@ -89,35 +88,9 @@ function App() {
     );
   }
 
-  // 2. IF CLIENT VIEW: Render Clean, Perfect Public Website
+  // 2. Client View: Clean, Perfect Public Agency Website (No black admin strip)
   return (
     <div className="app-container min-vh-100 d-flex flex-column">
-      {/* Top Floating Admin Quick Switch Strip (Discreet) */}
-      <div
-        className="bg-dark text-white-50 px-3 py-1 d-flex justify-content-between align-items-center small border-bottom border-secondary"
-        style={{ fontSize: "11px", zIndex: 1050 }}
-      >
-        <div className="d-flex align-items-center gap-2">
-          <span
-            className={`rounded-circle ${dbStatus?.isMySQL ? "bg-success" : "bg-primary"}`}
-            style={{ width: "6px", height: "6px" }}
-          ></span>
-          <span>{dbStatus?.isMySQL ? "MySQL 8.0 Active" : "Local Storage Active"}</span>
-          <span>•</span>
-          <span>Krsh.Innovations@gmail.com</span>
-        </div>
-
-        <div>
-          <button
-            onClick={handleOpenAdmin}
-            className="btn btn-link text-info text-decoration-none p-0 fw-semibold"
-            style={{ fontSize: "11px" }}
-          >
-            🔐 Open Backend Admin Panel &rarr;
-          </button>
-        </div>
-      </div>
-
       {/* Top Glassmorphic Navigation Bar - Clean Single-Line */}
       <NavigationBar
         onOpenAdmin={handleOpenAdmin}

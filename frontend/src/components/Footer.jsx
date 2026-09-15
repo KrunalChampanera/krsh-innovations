@@ -137,12 +137,14 @@ const Footer = ({ onOpenAdmin }) => {
           <div className="d-flex align-items-center gap-3">
             <span>Built with React 18, Node.js & MySQL</span>
             <span>•</span>
-            <button
-              onClick={onOpenAdmin}
+            <a
+              href="http://localhost:5181"
+              target="_blank"
+              rel="noreferrer"
               className="btn btn-link text-secondary text-decoration-none p-0 small"
             >
-              Admin Dashboard
-            </button>
+              🔐 Admin Portal (Port 5181)
+            </a>
           </div>
         </div>
       </Container>
