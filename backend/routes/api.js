@@ -157,17 +157,26 @@ router.post("/upload", async (req, res) => {
       return res.status(400).json({ success: false, error: "No image file data provided" });
     }
 
-    // Match base64 data URL
-    const matches = image.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/);
-    if (!matches || matches.length !== 3) {
-      return res.status(400).json({ success: false, error: "Invalid base64 image data" });
+    let base64Data = image;
+    let ext = "png";
+
+    if (typeof image === "string" && image.startsWith("data:")) {
+      const commaIndex = image.indexOf(",");
+      if (commaIndex !== -1) {
+        const header = image.substring(5, commaIndex); // e.g. "image/jpeg;base64"
+        base64Data = image.substring(commaIndex + 1);
+        const mime = header.split(";")[0] || "image/png";
+        let sub = mime.split("/")[1] || "png";
+        if (sub.includes("svg")) ext = "svg";
+        else if (sub.includes("jpeg") || sub.includes("jpg")) ext = "jpg";
+        else if (sub.includes("webp")) ext = "webp";
+        else if (sub.includes("gif")) ext = "gif";
+        else ext = sub.replace(/[^a-z0-9]/gi, "") || "png";
+      }
     }
 
-    const mimeType = matches[1];
-    const base64Data = matches[2];
-    let ext = mimeType.split("/")[1] || "png";
-    if (ext === "jpeg") ext = "jpg";
-    ext = ext.replace(/[^a-z0-9]/gi, "");
+    // Strip any residual whitespace or newlines
+    base64Data = base64Data.replace(/[\r\n\s]/g, "");
 
     const uploadsDir = path.join(__dirname, "..", "uploads");
     if (!fs.existsSync(uploadsDir)) {
@@ -191,7 +200,7 @@ router.post("/upload", async (req, res) => {
     });
   } catch (error) {
     console.error("Upload error:", error);
-    res.status(500).json({ success: false, error: error.message });
+    res.status(500).json({ success: false, error: error.message || "Failed to process image upload" });
   }
 });
 

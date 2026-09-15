@@ -205,6 +205,14 @@ const AdminDashboard = ({ onBackToSite, dbStatus }) => {
 
   const handleSaveGallery = async (e) => {
     e.preventDefault();
+    if (uploadingImage) {
+      setAlert({ type: "warning", text: "Please wait, image is still uploading to server..." });
+      return;
+    }
+    if (!galleryForm.title || !galleryForm.category || !galleryForm.image_url) {
+      setAlert({ type: "danger", text: "Please provide Project Title, Category, and Image." });
+      return;
+    }
     try {
       const isEdit = galleryForm.id !== null;
       const url = isEdit ? `/api/gallery/${galleryForm.id}` : "/api/gallery";
@@ -215,21 +223,29 @@ const AdminDashboard = ({ onBackToSite, dbStatus }) => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(galleryForm)
       });
-      const data = await res.json();
 
-      if (data.success) {
+      let data;
+      try {
+        data = await res.json();
+      } catch (parseErr) {
+        throw new Error(`Server returned status ${res.status}: ${res.statusText}`);
+      }
+
+      if (data && data.success) {
         setAlert({
           type: "success",
           text: isEdit ? "Gallery project photo updated!" : "New project photo added to live gallery!"
         });
         setShowGalleryModal(false);
         resetGalleryForm();
+        setUploadSuccess(null);
         fetchGallery();
       } else {
-        setAlert({ type: "danger", text: data.error || "Save failed." });
+        setAlert({ type: "danger", text: (data && data.error) ? data.error : "Save failed. Please check input values." });
       }
     } catch (err) {
-      setAlert({ type: "danger", text: "Error saving project." });
+      console.error("Error saving gallery:", err);
+      setAlert({ type: "danger", text: `Error saving project: ${err.message}` });
     }
   };
 
