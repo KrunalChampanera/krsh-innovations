@@ -112,9 +112,11 @@ const TechStackSection = () => {
     <section id="tech-stack" className="py-5 bg-light border-top border-bottom">
       <Container>
         <div className="section-title-wrap">
-          <span className="badge bg-primary-subtle text-primary border border-primary-subtle rounded-pill px-3 py-2 fw-semibold mb-2">
-            Engineered with Precision
-          </span>
+          <div className="d-block mb-3">
+            <span className="badge bg-primary-subtle text-primary border border-primary-subtle rounded-pill px-3 py-2 fw-semibold section-tag-badge">
+              Engineered with Precision
+            </span>
+          </div>
           <h2 className="section-title">Our Technical Ecosystem</h2>
           <div className="section-divider"></div>
           <p className="section-subtitle">

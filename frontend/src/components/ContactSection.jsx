@@ -71,9 +71,11 @@ const ContactSection = () => {
     <section id="contact" className="py-5 my-4 bg-light border-top">
       <Container>
         <div className="section-title-wrap">
-          <span className="badge bg-primary-subtle text-primary border border-primary-subtle rounded-pill px-3 py-2 fw-semibold mb-2">
-            Let's Talk Code & Scale
-          </span>
+          <div className="d-block mb-3">
+            <span className="badge bg-primary-subtle text-primary border border-primary-subtle rounded-pill px-3 py-2 fw-semibold section-tag-badge">
+              Let's Talk Code & Scale
+            </span>
+          </div>
           <h2 className="section-title">Start Your Project with Us</h2>
           <div className="section-divider"></div>
           <p className="section-subtitle">

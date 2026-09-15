@@ -17,7 +17,6 @@ import {
   Mail,
   Image as ImageIcon,
   DollarSign,
-  ArrowLeft,
   RefreshCw,
   PlusCircle,
   Trash2,
@@ -414,16 +413,6 @@ const AdminDashboard = ({ onBackToSite, dbStatus }) => {
               {dbStatus?.isMySQL ? "MySQL 8.0 (Live)" : "Local Resilient Store"}
             </div>
           </div>
-
-          <a
-            href="http://localhost:5180"
-            target="_blank"
-            rel="noreferrer"
-            className="btn btn-outline-light w-100 d-flex align-items-center justify-content-center gap-2 rounded-pill py-2 fw-semibold border-secondary text-decoration-none"
-          >
-            <ArrowLeft size={16} />
-            <span>View Public Website (5180)</span>
-          </a>
         </div>
       </div>
 
