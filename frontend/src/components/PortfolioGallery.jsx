@@ -325,9 +325,9 @@ const PortfolioGallery = ({ onOpenAdmin, refreshTrigger }) => {
           </Row>
         </div>
 
-        {/* Category Filters Bar + Admin Trigger */}
-        <div className="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4">
-          <div className="d-flex flex-wrap gap-2">
+        {/* Category Filters Bar */}
+        <div className="d-flex justify-content-center align-items-center flex-wrap gap-2 mb-4">
+          <div className="d-flex flex-wrap justify-content-center gap-2">
             {categories.map((cat, idx) => (
               <button
                 key={idx}
@@ -343,16 +343,6 @@ const PortfolioGallery = ({ onOpenAdmin, refreshTrigger }) => {
               </button>
             ))}
           </div>
-
-          <a
-            href="http://localhost:5181"
-            target="_blank"
-            rel="noreferrer"
-            className="btn btn-outline-primary btn-sm rounded-pill px-3 py-2 d-flex align-items-center gap-2 fw-semibold shadow-sm text-decoration-none"
-          >
-            <PlusCircle size={16} />
-            <span>Manage Gallery (Admin 5181)</span>
-          </a>
         </div>
 
         {/* Dynamic Project Cards Grid */}

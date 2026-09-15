@@ -66,14 +66,6 @@ const Footer = ({ onOpenAdmin }) => {
               <li><a href="#tech-stack" className="text-secondary text-decoration-none hover-white">Technologies</a></li>
               <li><a href="#why-us" className="text-secondary text-decoration-none hover-white">Why Us</a></li>
               <li><a href="#contact" className="text-secondary text-decoration-none hover-white">Contact Us</a></li>
-              <li>
-                <button
-                  onClick={onOpenAdmin}
-                  className="btn btn-link text-info text-decoration-none p-0 small fw-semibold text-start"
-                >
-                  🔐 Admin Portal
-                </button>
-              </li>
             </ul>
           </Col>
 
@@ -134,17 +126,8 @@ const Footer = ({ onOpenAdmin }) => {
           <div>
             &copy; {new Date().getFullYear()} <strong>Krsh.Innovations</strong>. All rights reserved.
           </div>
-          <div className="d-flex align-items-center gap-3">
+          <div>
             <span>Built with React 18, Node.js & MySQL</span>
-            <span>•</span>
-            <a
-              href="http://localhost:5181"
-              target="_blank"
-              rel="noreferrer"
-              className="btn btn-link text-secondary text-decoration-none p-0 small"
-            >
-              🔐 Admin Portal (Port 5181)
-            </a>
           </div>
         </div>
       </Container>

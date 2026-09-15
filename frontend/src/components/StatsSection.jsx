@@ -1,32 +1,32 @@
 import React, { useState, useEffect } from "react";
 import { Container, Row, Col } from "react-bootstrap";
-import { CheckSquare, Smile, Target, Award } from "lucide-react";
+import { Rocket, Zap, Layers, ShieldCheck } from "lucide-react";
 
 const StatsSection = () => {
   const [stats, setStats] = useState([
     {
-      label: "Completed Project",
-      value: "4000+",
-      sub: "Robust code & deployments",
-      icon: <CheckSquare size={26} className="text-primary" />
+      label: "Built To Your Vision",
+      value: "100% Custom",
+      sub: "Bespoke architecture engineered for your exact requirements",
+      icon: <Rocket size={26} className="text-primary" />
     },
     {
-      label: "Happy Clients",
-      value: "600+",
-      sub: "Global founders & brands",
-      icon: <Smile size={26} className="text-info" />
+      label: "Fast-Track Delivery",
+      value: "Rapid MVP",
+      sub: "From concept wireframes to live deployment in record weeks",
+      icon: <Zap size={26} className="text-info" />
     },
     {
-      label: "Multi Services",
-      value: "500+",
-      sub: "Web, Mobile, DB, Cloud",
-      icon: <Target size={26} className="text-primary" />
+      label: "Modern Tech Stacks",
+      value: "Battle-Tested",
+      sub: "React 18, Flutter, Node.js, Laravel, MySQL & Python AI",
+      icon: <Layers size={26} className="text-primary" />
     },
     {
-      label: "Retention Ratio",
-      value: "95%",
-      sub: "Trusted long-term partner",
-      icon: <Award size={26} className="text-warning" />
+      label: "100% Code Ownership",
+      value: "Full Handover",
+      sub: "Complete IP handover, direct founder access & zero lock-in",
+      icon: <ShieldCheck size={26} className="text-success" />
     }
   ]);
 
@@ -35,20 +35,19 @@ const StatsSection = () => {
       .then((res) => res.json())
       .then((data) => {
         if (data.success && data.data && data.data.length > 0) {
-          // Map backend stats with icons
           const mapped = data.data.map((item, idx) => ({
             label: item.label,
             value: item.value,
             sub: item.description,
             icon:
               idx === 0 ? (
-                <CheckSquare size={26} className="text-primary" />
+                <Rocket size={26} className="text-primary" />
               ) : idx === 1 ? (
-                <Smile size={26} className="text-info" />
+                <Zap size={26} className="text-info" />
               ) : idx === 2 ? (
-                <Target size={26} className="text-primary" />
+                <Layers size={26} className="text-primary" />
               ) : (
-                <Award size={26} className="text-warning" />
+                <ShieldCheck size={26} className="text-success" />
               )
           }));
           setStats(mapped);
@@ -58,12 +57,17 @@ const StatsSection = () => {
   }, []);
 
   return (
-    <section className="stats-banner">
+    <section className="stats-banner py-5">
       <Container>
-        {/* Title directly matching screenshot 5 */}
+        {/* Startup Vision Header */}
         <div className="text-center mb-5">
-          <h2 className="display-6 fw-bold mb-2">
-            We Have Completed 4000+ Projects{" "}
+          <div className="d-block mb-3">
+            <span className="badge bg-primary-subtle text-primary border border-primary-subtle rounded-pill px-3 py-2 fw-semibold section-tag-badge">
+              Agile IT & Startup Studio
+            </span>
+          </div>
+          <h2 className="display-6 fw-bold mb-3 text-dark">
+            We Are Ready To Build{" "}
             <span
               style={{
                 background: "var(--krsh-gradient-blue)",
@@ -71,24 +75,26 @@ const StatsSection = () => {
                 WebkitTextFillColor: "transparent"
               }}
             >
-              Successfully
+              What You Want
             </span>
           </h2>
-          <p className="text-muted mx-auto" style={{ maxWidth: "600px" }}>
-            From high-growth tech startups to global enterprise platforms, Krsh.Innovations delivers
-            speed, scale, and clean architecture every time.
+          <p className="text-muted mx-auto" style={{ maxWidth: "680px", fontSize: "1.05rem", lineHeight: "1.65" }}>
+            As an agile IT & startup studio, Krsh.Innovations partners directly with ambitious founders and
+            growing companies to turn bold digital concepts into high-performance, scale-ready software.
           </p>
         </div>
 
         <Row className="g-4">
           {stats.map((stat, index) => (
             <Col key={index} xs={12} sm={6} lg={3}>
-              <div className="stat-card">
-                <div className="stat-icon-wrapper">{stat.icon}</div>
-                <div className="stat-number">{stat.value}</div>
-                <div className="stat-label">{stat.label}</div>
+              <div className="stat-card h-100 d-flex flex-column justify-content-between">
+                <div>
+                  <div className="stat-icon-wrapper">{stat.icon}</div>
+                  <div className="stat-number fs-3 fw-bold">{stat.value}</div>
+                  <div className="stat-label fw-semibold text-dark">{stat.label}</div>
+                </div>
                 {stat.sub && (
-                  <div className="small text-muted mt-2 border-top pt-2">
+                  <div className="small text-muted mt-3 border-top pt-2" style={{ fontSize: "0.82rem", lineHeight: "1.5" }}>
                     {stat.sub}
                   </div>
                 )}

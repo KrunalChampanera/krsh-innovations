@@ -9,6 +9,7 @@ import {
   Compass,
   ArrowRight,
   CheckCircle,
+  CheckCircle2,
   Sparkles
 } from "lucide-react";
 
@@ -222,16 +223,25 @@ const ServicesSection = ({ onSelectServiceForQuote }) => {
       </Container>
 
       {/* Service Detail Modal */}
-      <Modal show={!!selectedService} onHide={handleCloseModal} centered size="lg">
+      <Modal
+        show={!!selectedService}
+        onHide={handleCloseModal}
+        centered
+        size="lg"
+        contentClassName="border-0 shadow-lg rounded-4 overflow-hidden"
+      >
         {selectedService && (
           <>
-            <Modal.Header closeButton className="border-0 pb-0">
+            {/* Top Accent Gradient Line */}
+            <div style={{ height: "4px", background: "linear-gradient(90deg, #00a2ea 0%, #2563eb 100%)" }} />
+
+            <Modal.Header closeButton className="border-0 px-4 pt-4 pb-2">
               <div className="d-flex align-items-center gap-3">
                 <div
-                  className="rounded-circle d-flex align-items-center justify-content-center"
+                  className="rounded-3 d-flex align-items-center justify-content-center shadow-sm flex-shrink-0"
                   style={{
-                    width: "48px",
-                    height: "48px",
+                    width: "52px",
+                    height: "52px",
                     background: selectedService.circleBg,
                     color: selectedService.circleColor
                   }}
@@ -239,53 +249,89 @@ const ServicesSection = ({ onSelectServiceForQuote }) => {
                   {selectedService.icon}
                 </div>
                 <div>
-                  <Modal.Title className="fw-bold fs-4">{selectedService.title}</Modal.Title>
-                  <span className="small text-muted">Krsh.Innovations IT Services</span>
+                  <Modal.Title className="fw-bold fs-4 text-dark mb-1">
+                    {selectedService.title}
+                  </Modal.Title>
+                  <span className="badge bg-primary-subtle text-primary border border-primary-subtle rounded-pill px-3 py-1 small fw-semibold">
+                    Krsh.Innovations IT Services
+                  </span>
                 </div>
               </div>
             </Modal.Header>
-            <Modal.Body className="py-4">
-              <p className="text-secondary mb-4" style={{ fontSize: "1.05rem", lineHeight: 1.7 }}>
-                {selectedService.details}
-              </p>
 
-              <h6 className="fw-bold text-dark mb-3">Key Technical Capabilities:</h6>
-              <Row className="g-3 mb-4">
-                {selectedService.capabilities.map((cap, idx) => (
-                  <Col sm={6} key={idx}>
-                    <div className="d-flex align-items-start gap-2">
-                      <CheckCircle size={18} className="text-primary mt-1 flex-shrink-0" />
-                      <span className="small text-dark fw-medium">{cap}</span>
-                    </div>
-                  </Col>
-                ))}
-              </Row>
+            <Modal.Body className="px-4 py-3">
+              {/* Overview Box */}
+              <div className="p-3 rounded-3 bg-light border mb-4">
+                <p className="text-secondary mb-0" style={{ fontSize: "1.02rem", lineHeight: 1.7 }}>
+                  {selectedService.details}
+                </p>
+              </div>
 
-              <h6 className="fw-bold text-dark mb-2">Technologies Utilized:</h6>
-              <div className="d-flex flex-wrap gap-2">
-                {selectedService.tags.map((tag, idx) => (
-                  <Badge key={idx} bg="primary-subtle" text="primary" className="px-3 py-2 rounded-pill">
-                    {tag}
-                  </Badge>
-                ))}
+              {/* Key Technical Capabilities with Micro-Cards */}
+              <div className="mb-4">
+                <div className="d-flex align-items-center gap-2 mb-3">
+                  <span className="fw-bold text-dark fs-6">Key Technical Capabilities</span>
+                  <span className="text-muted small">({selectedService.capabilities.length} focus areas)</span>
+                </div>
+                <Row className="g-3">
+                  {selectedService.capabilities.map((cap, idx) => (
+                    <Col sm={6} key={idx}>
+                      <div
+                        className="h-100 p-3 rounded-3 bg-white border border-light-subtle shadow-sm d-flex align-items-start gap-3"
+                        style={{ transition: "all 0.2s ease" }}
+                      >
+                        <div
+                          className="rounded-circle d-flex align-items-center justify-content-center flex-shrink-0 mt-1"
+                          style={{
+                            width: "22px",
+                            height: "22px",
+                            background: "rgba(0, 162, 234, 0.12)",
+                            color: "#00a2ea"
+                          }}
+                        >
+                          <CheckCircle2 size={15} />
+                        </div>
+                        <span className="small text-dark fw-medium" style={{ lineHeight: 1.5 }}>
+                          {cap}
+                        </span>
+                      </div>
+                    </Col>
+                  ))}
+                </Row>
+              </div>
+
+              {/* Technologies Utilized */}
+              <div>
+                <span className="fw-bold text-dark fs-6 d-block mb-2">Technologies Utilized:</span>
+                <div className="d-flex flex-wrap gap-2">
+                  {selectedService.tags.map((tag, idx) => (
+                    <span
+                      key={idx}
+                      className="badge bg-white text-dark border border-primary-subtle px-3 py-2 rounded-pill shadow-sm small fw-semibold d-inline-flex align-items-center gap-1"
+                      style={{ fontSize: "0.82rem" }}
+                    >
+                      <span style={{ color: "#00a2ea" }}>•</span> {tag}
+                    </span>
+                  ))}
+                </div>
               </div>
             </Modal.Body>
-            <Modal.Footer className="border-0 pt-0 gap-2">
+
+            <Modal.Footer className="border-top bg-light bg-opacity-50 px-4 py-3 d-flex flex-wrap justify-content-end align-items-center gap-3">
               <button
                 type="button"
                 onClick={handleCloseModal}
                 className="btn-krsh-secondary"
-                style={{ minWidth: "120px", height: "42px", fontSize: "0.88rem" }}
               >
-                Close
+                <span>Close</span>
               </button>
               <button
                 type="button"
                 className="btn-krsh-primary"
-                style={{ height: "42px", fontSize: "0.88rem" }}
                 onClick={() => handleQuoteClick(selectedService)}
               >
-                Request Quote for This Service
+                <span>Request Quote for This Service</span>
+                <ArrowRight size={16} />
               </button>
             </Modal.Footer>
           </>

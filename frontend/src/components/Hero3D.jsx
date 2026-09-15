@@ -89,7 +89,7 @@ const Hero3D = ({ onGetStarted }) => {
     const height = currentMount.clientHeight || 500;
 
     const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 100);
-    camera.position.set(0, 1.1, 7.2);
+    camera.position.set(0, 0.4, 7.8);
 
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
     renderer.setSize(width, height);
@@ -101,229 +101,276 @@ const Hero3D = ({ onGetStarted }) => {
     const mainGroup = new THREE.Group();
     scene.add(mainGroup);
 
-    // 2. Build 3D IT Cloud Infrastructure & Cyber Core Model
-    const cyberHubGroup = new THREE.Group();
-    cyberHubGroup.position.set(0, -0.4, 0);
-    mainGroup.add(cyberHubGroup);
+    // ==========================================
+    // 2. BUILD 3D HOLOGRAPHIC CYBER CLOUD GLOBE
+    // ==========================================
+    const globeGroup = new THREE.Group();
+    globeGroup.position.set(0, 0.1, 0);
+    mainGroup.add(globeGroup);
 
-    // --- A. Base Server Pedestal Platform ---
-    const platformGroup = new THREE.Group();
-    platformGroup.position.set(0, -1.0, 0);
-    cyberHubGroup.add(platformGroup);
+    const globeRadius = 1.95;
 
-    // Main titanium disc base
-    const baseCylinderGeo = new THREE.CylinderGeometry(2.7, 2.9, 0.15, 48);
-    const metalMaterial = new THREE.MeshStandardMaterial({
-      color: 0x0f172a,
-      metalness: 0.85,
-      roughness: 0.25
-    });
-    const basePlatform = new THREE.Mesh(baseCylinderGeo, metalMaterial);
-    platformGroup.add(basePlatform);
-
-    // Inner circuit disc
-    const innerCircuitGeo = new THREE.CylinderGeometry(2.4, 2.4, 0.17, 48);
-    const circuitMat = new THREE.MeshStandardMaterial({
-      color: 0x1e293b,
-      metalness: 0.6,
-      roughness: 0.4
-    });
-    const innerCircuit = new THREE.Mesh(innerCircuitGeo, circuitMat);
-    platformGroup.add(innerCircuit);
-
-    // Glowing Cyan Perimeter Ring
-    const platformRingGeo = new THREE.TorusGeometry(2.55, 0.03, 16, 64);
-    const glowMat = new THREE.MeshBasicMaterial({ color: 0x00a2ea });
-    const platformRing = new THREE.Mesh(platformRingGeo, glowMat);
-    platformRing.rotation.x = Math.PI / 2;
-    platformRing.position.y = 0.09;
-    platformGroup.add(platformRing);
-
-    // 4 High-Tech Edge Server Tower Monoliths
-    const serverTowers = [];
-    const towerPositions = [
-      [1.55, 0.6, 0.85],
-      [-1.55, 0.6, 0.85],
-      [1.3, 0.6, -1.2],
-      [-1.3, 0.6, -1.2]
-    ];
-
-    const towerGeo = new THREE.BoxGeometry(0.36, 1.2, 0.36);
-    const towerMat = new THREE.MeshStandardMaterial({
-      color: 0x111827,
+    // A. Inner Translucent Dark Cyber Sphere
+    const innerSphereGeo = new THREE.SphereGeometry(globeRadius, 40, 40);
+    const innerSphereMat = new THREE.MeshStandardMaterial({
+      color: 0x050c1a,
       metalness: 0.9,
-      roughness: 0.2
-    });
-
-    const ledGreenMat = new THREE.MeshBasicMaterial({ color: 0x10b981 });
-    const ledCyanMat = new THREE.MeshBasicMaterial({ color: 0x00a2ea });
-    const ledPurpleMat = new THREE.MeshBasicMaterial({ color: 0x8b5cf6 });
-    const ledMaterials = [ledGreenMat, ledCyanMat, ledPurpleMat];
-
-    towerPositions.forEach((pos, idx) => {
-      const tower = new THREE.Mesh(towerGeo, towerMat);
-      tower.position.set(...pos);
-      platformGroup.add(tower);
-
-      // Add 3 blinking server LED status lights on each tower
-      for (let l = 0; l < 3; l++) {
-        const ledGeo = new THREE.BoxGeometry(0.24, 0.04, 0.04);
-        const ledMesh = new THREE.Mesh(ledGeo, ledMaterials[(idx + l) % 3]);
-        ledMesh.position.set(0, 0.3 - l * 0.16, 0.185);
-        tower.add(ledMesh);
-      }
-      serverTowers.push(tower);
-    });
-
-    // --- B. Central Quantum Computing Core ---
-    const quantumCoreGroup = new THREE.Group();
-    quantumCoreGroup.position.set(0, 0.35, 0);
-    cyberHubGroup.add(quantumCoreGroup);
-
-    // Pulsating inner energy heart (Sphere)
-    const heartGeo = new THREE.SphereGeometry(0.5, 32, 32);
-    const heartMat = new THREE.MeshStandardMaterial({
-      color: 0x00a2ea,
-      emissive: 0x0284c7,
-      emissiveIntensity: 1.4,
       roughness: 0.2,
-      metalness: 0.5
-    });
-    const coreHeart = new THREE.Mesh(heartGeo, heartMat);
-    quantumCoreGroup.add(coreHeart);
-
-    // Multifaceted Translucent Crystal Icosahedron
-    const crystalGeo = new THREE.IcosahedronGeometry(0.82, 0);
-    const crystalMat = new THREE.MeshStandardMaterial({
-      color: 0x38bdf8,
-      emissive: 0x0369a1,
-      emissiveIntensity: 0.6,
-      metalness: 0.8,
-      roughness: 0.15,
       transparent: true,
-      opacity: 0.8
+      opacity: 0.94
     });
-    const crystalCore = new THREE.Mesh(crystalGeo, crystalMat);
-    quantumCoreGroup.add(crystalCore);
+    const innerGlobe = new THREE.Mesh(innerSphereGeo, innerSphereMat);
+    globeGroup.add(innerGlobe);
 
-    // Outer Cyber Wireframe Cage
-    const cageGeo = new THREE.IcosahedronGeometry(1.08, 1);
-    const cageMat = new THREE.MeshBasicMaterial({
-      color: 0x38bdf8,
+    // B. Outer Luminous Geodesic Wireframe
+    const latticeGeo = new THREE.IcosahedronGeometry(globeRadius * 1.03, 3);
+    const latticeMat = new THREE.MeshBasicMaterial({
+      color: 0x00a2ea,
       wireframe: true,
       transparent: true,
-      opacity: 0.65
+      opacity: 0.28
     });
-    const outerCage = new THREE.Mesh(cageGeo, cageMat);
-    quantumCoreGroup.add(outerCage);
+    const latticeMesh = new THREE.Mesh(latticeGeo, latticeMat);
+    globeGroup.add(latticeMesh);
 
-    // --- C. Concentric Gyroscopic Orbital Rings ---
-    const ring1Geo = new THREE.TorusGeometry(1.5, 0.022, 16, 80);
-    const ring1Mat = new THREE.MeshBasicMaterial({ color: 0x00a2ea });
-    const orbitRing1 = new THREE.Mesh(ring1Geo, ring1Mat);
-    orbitRing1.rotation.x = 0.5;
-    quantumCoreGroup.add(orbitRing1);
+    // C. Fibonacci Point-Cloud Matrix on Surface (420 data nodes)
+    const pointCount = 420;
+    const pointPositions = new Float32Array(pointCount * 3);
+    const goldenRatio = (1 + Math.sqrt(5)) / 2;
+    for (let i = 0; i < pointCount; i++) {
+      const theta = 2 * Math.PI * i / goldenRatio;
+      const phi = Math.acos(1 - 2 * (i + 0.5) / pointCount);
+      const r = globeRadius * 1.035;
+      pointPositions[i * 3] = r * Math.sin(phi) * Math.cos(theta);
+      pointPositions[i * 3 + 1] = r * Math.sin(phi) * Math.sin(theta);
+      pointPositions[i * 3 + 2] = r * Math.cos(phi);
+    }
+    const pointCloudGeo = new THREE.BufferGeometry();
+    pointCloudGeo.setAttribute("position", new THREE.BufferAttribute(pointPositions, 3));
+    const pointCloudMat = new THREE.PointsMaterial({
+      size: 0.045,
+      color: 0x38bdf8,
+      transparent: true,
+      opacity: 0.75
+    });
+    const pointCloud = new THREE.Points(pointCloudGeo, pointCloudMat);
+    globeGroup.add(pointCloud);
 
-    const ring2Geo = new THREE.TorusGeometry(1.9, 0.02, 16, 80);
-    const ring2Mat = new THREE.MeshBasicMaterial({ color: 0x818cf8 });
-    const orbitRing2 = new THREE.Mesh(ring2Geo, ring2Mat);
-    orbitRing2.rotation.y = 0.7;
-    orbitRing2.rotation.x = -0.3;
-    quantumCoreGroup.add(orbitRing2);
+    // D. Glowing Meridian & Latitude Coordinate Bands
+    const ring1Geo = new THREE.TorusGeometry(globeRadius * 1.04, 0.015, 16, 90);
+    const ringMat = new THREE.MeshBasicMaterial({ color: 0x00a2ea, transparent: true, opacity: 0.45 });
+    const equatorRing = new THREE.Mesh(ring1Geo, ringMat);
+    equatorRing.rotation.x = Math.PI / 2;
+    globeGroup.add(equatorRing);
 
-    const ring3Geo = new THREE.TorusGeometry(2.3, 0.018, 16, 80);
-    const ring3Mat = new THREE.MeshBasicMaterial({ color: 0x38bdf8 });
-    const orbitRing3 = new THREE.Mesh(ring3Geo, ring3Mat);
-    orbitRing3.rotation.z = 0.6;
-    quantumCoreGroup.add(orbitRing3);
+    const meridian1 = new THREE.Mesh(ring1Geo, ringMat);
+    meridian1.rotation.y = 0.8;
+    globeGroup.add(meridian1);
 
-    // --- D. 6 Interactive Floating Tech Stack Nodes ---
-    const techData = [
-      { name: "React 18", symbol: "⚛", subtitle: "Frontend & Three.js", color: "#0284c7", pos: [-2.5, 1.3, 0.6], speed: 1.1 },
-      { name: "Flutter", symbol: "📱", subtitle: "iOS & Android Apps", color: "#0ea5e9", pos: [2.5, 1.2, 0.4], speed: 1.3 },
-      { name: "Node.js", symbol: "🟢", subtitle: "APIs & Microservices", color: "#16a34a", pos: [-2.2, -0.2, 1.6], speed: 0.9 },
-      { name: "PHP Laravel", symbol: "⚡", subtitle: "Enterprise Backend", color: "#dc2626", pos: [2.2, -0.3, 1.5], speed: 1.2 },
-      { name: "MySQL 8", symbol: "🐬", subtitle: "Cloud Databases", color: "#0369a1", pos: [0.0, 2.4, -0.5], speed: 1.0 },
-      { name: "Python AI", symbol: "🐍", subtitle: "Neural & ML Models", color: "#d97706", pos: [-1.4, 2.2, -1.2], speed: 1.4 }
+    const meridian2 = new THREE.Mesh(ring1Geo, ringMat);
+    meridian2.rotation.y = -0.8;
+    globeGroup.add(meridian2);
+
+    // E. Global Regional Cloud Hub Beacons & Radar Pulse Rings
+    const hubCoords = [
+      { name: "Silicon Valley", lat: 37, lon: -122, color: 0x00a2ea },
+      { name: "London", lat: 51, lon: 0, color: 0x10b981 },
+      { name: "Singapore", lat: 1.3, lon: 103, color: 0x38bdf8 },
+      { name: "Tokyo", lat: 35, lon: 139, color: 0x818cf8 },
+      { name: "Frankfurt", lat: 50, lon: 8.6, color: 0x00a2ea },
+      { name: "Sydney", lat: -33, lon: 151, color: 0xf59e0b }
     ];
 
-    const cubeMeshes = [];
-    const conduitLines = [];
-    const cubeGeo = new THREE.BoxGeometry(0.72, 0.72, 0.72);
+    const convertGeoToVector = (lat, lon, r) => {
+      const phi = (90 - lat) * (Math.PI / 180);
+      const theta = (lon + 180) * (Math.PI / 180);
+      return new THREE.Vector3(
+        -r * Math.sin(phi) * Math.cos(theta),
+        r * Math.cos(phi),
+        r * Math.sin(phi) * Math.sin(theta)
+      );
+    };
+
+    const hubVectors = [];
+    const radarRings = [];
+    const beaconGeo = new THREE.SphereGeometry(0.07, 16, 16);
+
+    hubCoords.forEach((hub) => {
+      const v = convertGeoToVector(hub.lat, hub.lon, globeRadius * 1.035);
+      hubVectors.push(v);
+
+      const beaconMat = new THREE.MeshBasicMaterial({ color: hub.color });
+      const beacon = new THREE.Mesh(beaconGeo, beaconMat);
+      beacon.position.copy(v);
+      globeGroup.add(beacon);
+
+      // Radar Pulse Ring lying tangential to surface
+      const ringGeo = new THREE.RingGeometry(0.08, 0.12, 32);
+      const ringMat = new THREE.MeshBasicMaterial({
+        color: hub.color,
+        side: THREE.DoubleSide,
+        transparent: true,
+        opacity: 0.7
+      });
+      const radarRing = new THREE.Mesh(ringGeo, ringMat);
+      radarRing.position.copy(v);
+      radarRing.lookAt(new THREE.Vector3(0, 0, 0));
+      globeGroup.add(radarRing);
+      radarRings.push(radarRing);
+    });
+
+    // F. 3D Laser Flight/Data Arcs Connecting Hubs
+    const arcPairs = [
+      [0, 1], // Silicon Valley -> London
+      [1, 4], // London -> Frankfurt
+      [4, 2], // Frankfurt -> Singapore
+      [2, 3], // Singapore -> Tokyo
+      [3, 5]  // Tokyo -> Sydney
+    ];
+
+    const photonPulses = [];
+    const arcCurves = [];
+
+    arcPairs.forEach(([idxA, idxB]) => {
+      const pA = hubVectors[idxA];
+      const pB = hubVectors[idxB];
+      const mid = pA.clone().add(pB).multiplyScalar(0.5);
+      const dist = pA.distanceTo(pB);
+      mid.normalize().multiplyScalar(globeRadius * (1.18 + dist * 0.08));
+
+      const curve = new THREE.QuadraticBezierCurve3(pA, mid, pB);
+      arcCurves.push(curve);
+
+      const points = curve.getPoints(40);
+      const lineGeo = new THREE.BufferGeometry().setFromPoints(points);
+      const lineMat = new THREE.LineBasicMaterial({
+        color: 0x38bdf8,
+        transparent: true,
+        opacity: 0.55
+      });
+      const arcLine = new THREE.Line(lineGeo, lineMat);
+      globeGroup.add(arcLine);
+
+      // Traveling Photon Data Packet
+      const photonGeo = new THREE.SphereGeometry(0.045, 12, 12);
+      const photonMat = new THREE.MeshBasicMaterial({ color: 0xffffff });
+      const photon = new THREE.Mesh(photonGeo, photonMat);
+      globeGroup.add(photon);
+      photonPulses.push({ photon, curve, progress: Math.random() });
+    });
+
+    // G. Inner Radiant Glowing Core
+    const innerLight = new THREE.PointLight(0x00a2ea, 4.0, 10);
+    innerLight.position.set(0, 0, 0);
+    globeGroup.add(innerLight);
+
+    // ====================================================
+    // 3. 6 FLOATING 3D TECH SATELLITES IN PLANETARY ORBIT
+    // ====================================================
+    const techData = [
+      { name: "React 18", symbol: "⚛", subtitle: "Frontend & 3D Web", color: "#0284c7" },
+      { name: "Flutter", symbol: "📱", subtitle: "iOS & Android Apps", color: "#0ea5e9" },
+      { name: "Node.js", symbol: "🟢", subtitle: "APIs & Microservices", color: "#10b981" },
+      { name: "PHP Laravel", symbol: "⚡", subtitle: "Enterprise Backend", color: "#dc2626" },
+      { name: "MySQL 8", symbol: "🐬", subtitle: "Cloud Databases", color: "#0369a1" },
+      { name: "Python AI", symbol: "🐍", subtitle: "Neural & ML Models", color: "#d97706" }
+    ];
+
+    const satelliteMeshes = [];
+    const satelliteConduits = [];
+    const satGeo = new THREE.BoxGeometry(0.72, 0.72, 0.72);
 
     techData.forEach((tech, index) => {
       const texture = createTechCubeTexture(tech.name, tech.symbol, tech.subtitle, tech.color);
-      const cubeMat = new THREE.MeshStandardMaterial({
+      const satMat = new THREE.MeshStandardMaterial({
         map: texture,
         metalness: 0.45,
         roughness: 0.25
       });
 
-      const cube = new THREE.Mesh(cubeGeo, cubeMat);
-      cube.position.set(...tech.pos);
-      cube.userData = { ...tech, initialY: tech.pos[1], index };
-      mainGroup.add(cube);
-      cubeMeshes.push(cube);
+      const satellite = new THREE.Mesh(satGeo, satMat);
+      satellite.userData = {
+        ...tech,
+        baseAngle: index * (Math.PI * 2 / techData.length),
+        orbitRadiusX: 3.45,
+        orbitRadiusZ: 2.7,
+        orbitTilt: 0.32,
+        speed: 0.35 + (index % 2) * 0.05
+      };
+      mainGroup.add(satellite);
+      satelliteMeshes.push(satellite);
 
-      // Glowing laser data conduit from central core to tech cube
-      const linePositions = new Float32Array([
-        0, 0.35, 0,
-        tech.pos[0], tech.pos[1], tech.pos[2]
-      ]);
-      const lineGeo = new THREE.BufferGeometry();
-      lineGeo.setAttribute("position", new THREE.BufferAttribute(linePositions, 3));
-      const lineMat = new THREE.LineBasicMaterial({
+      // Connector laser conduit from satellite to globe center
+      const linePositions = new Float32Array(6);
+      const conduitGeo = new THREE.BufferGeometry();
+      conduitGeo.setAttribute("position", new THREE.BufferAttribute(linePositions, 3));
+      const conduitMat = new THREE.LineBasicMaterial({
         color: 0x00a2ea,
         transparent: true,
-        opacity: 0.45
+        opacity: 0.4
       });
-      const conduit = new THREE.Line(lineGeo, lineMat);
+      const conduit = new THREE.Line(conduitGeo, conduitMat);
       mainGroup.add(conduit);
-      conduitLines.push({ conduit, cube });
+      satelliteConduits.push(conduit);
     });
 
-    // 4. Subtle Cyber Nebula Particles
-    const particleCount = 140;
+    // 4. Subtle Cosmic Ambient Particles
+    const particleCount = 180;
     const particleGeo = new THREE.BufferGeometry();
     const particlePositions = new Float32Array(particleCount * 3);
     for (let i = 0; i < particleCount * 3; i += 3) {
-      particlePositions[i] = (Math.random() - 0.5) * 12;
-      particlePositions[i + 1] = (Math.random() - 0.5) * 8;
-      particlePositions[i + 2] = (Math.random() - 0.5) * 8;
+      particlePositions[i] = (Math.random() - 0.5) * 14;
+      particlePositions[i + 1] = (Math.random() - 0.5) * 10;
+      particlePositions[i + 2] = (Math.random() - 0.5) * 10;
     }
     particleGeo.setAttribute("position", new THREE.BufferAttribute(particlePositions, 3));
     const particleMat = new THREE.PointsMaterial({
-      size: 0.05,
+      size: 0.045,
       color: 0x38bdf8,
       transparent: true,
-      opacity: 0.6
+      opacity: 0.65
     });
     const particles = new THREE.Points(particleGeo, particleMat);
     scene.add(particles);
 
-    // 5. Lighting
-    const ambientLight = new THREE.AmbientLight(0xffffff, 1.4);
+    // 5. Scene Lighting
+    const ambientLight = new THREE.AmbientLight(0xffffff, 1.3);
     scene.add(ambientLight);
 
-    const dirLight = new THREE.DirectionalLight(0xffffff, 1.8);
-    dirLight.position.set(5, 8, 6);
+    const dirLight = new THREE.DirectionalLight(0xffffff, 2.0);
+    dirLight.position.set(5, 7, 6);
     scene.add(dirLight);
 
-    const cyanGlow = new THREE.PointLight(0x38bdf8, 2.5, 8);
-    cyanGlow.position.set(-2, 2, 2);
-    scene.add(cyanGlow);
+    const cyanRimLight = new THREE.PointLight(0x38bdf8, 2.5, 9);
+    cyanRimLight.position.set(-3.5, 2.5, 3);
+    scene.add(cyanRimLight);
 
-    const purpleGlow = new THREE.PointLight(0x818cf8, 2.2, 8);
-    purpleGlow.position.set(2, 2, 2);
-    scene.add(purpleGlow);
+    const purpleRimLight = new THREE.PointLight(0x818cf8, 2.2, 9);
+    purpleRimLight.position.set(3.5, -2, 3);
+    scene.add(purpleRimLight);
 
-    // 6. Raycaster & Mouse Interaction
+    // ==========================================
+    // 6. INTERACTIVE MOUSE & DRAG-TO-SPIN LOGIC
+    // ==========================================
     const raycaster = new THREE.Raycaster();
     const mouse = new THREE.Vector2(-1000, -1000);
     let targetRotationX = 0;
     let targetRotationY = 0;
 
-    const handleMouseMove = (event) => {
+    let isDragging = false;
+    let previousMousePosition = { x: 0, y: 0 };
+    let dragVelocity = { x: 0, y: 0 };
+
+    const onMouseDown = (e) => {
+      isDragging = true;
+      previousMousePosition = { x: e.clientX, y: e.clientY };
+    };
+
+    const onMouseUp = () => {
+      isDragging = false;
+    };
+
+    const onMouseMove = (event) => {
       const rect = currentMount.getBoundingClientRect();
       const x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
       const y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
@@ -331,80 +378,126 @@ const Hero3D = ({ onGetStarted }) => {
       mouse.x = x;
       mouse.y = y;
 
-      targetRotationY = x * 0.35;
-      targetRotationX = -y * 0.25;
+      if (isDragging) {
+        const deltaX = event.clientX - previousMousePosition.x;
+        const deltaY = event.clientY - previousMousePosition.y;
+        dragVelocity.x = deltaX * 0.005;
+        dragVelocity.y = deltaY * 0.005;
 
+        globeGroup.rotation.y += dragVelocity.x;
+        globeGroup.rotation.x += dragVelocity.y;
+
+        previousMousePosition = { x: event.clientX, y: event.clientY };
+      } else {
+        targetRotationY = x * 0.28;
+        targetRotationX = -y * 0.22;
+      }
+
+      // Hover Detection over Satellites
       raycaster.setFromCamera(mouse, camera);
-      const intersects = raycaster.intersectObjects(cubeMeshes);
+      const intersects = raycaster.intersectObjects(satelliteMeshes);
       if (intersects.length > 0) {
         const hit = intersects[0].object;
         setHoveredTech(hit.userData);
         currentMount.style.cursor = "pointer";
       } else {
         setHoveredTech(null);
-        currentMount.style.cursor = "default";
+        currentMount.style.cursor = isDragging ? "grabbing" : "grab";
       }
     };
 
-    window.addEventListener("mousemove", handleMouseMove);
+    currentMount.addEventListener("mousedown", onMouseDown);
+    window.addEventListener("mouseup", onMouseUp);
+    window.addEventListener("mousemove", onMouseMove);
 
-    // 7. Animation Loop
+    // Touch support for mobile devices
+    const onTouchStart = (e) => {
+      if (e.touches.length === 1) {
+        isDragging = true;
+        previousMousePosition = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+      }
+    };
+    const onTouchMove = (e) => {
+      if (isDragging && e.touches.length === 1) {
+        const deltaX = e.touches[0].clientX - previousMousePosition.x;
+        const deltaY = e.touches[0].clientY - previousMousePosition.y;
+        globeGroup.rotation.y += deltaX * 0.006;
+        globeGroup.rotation.x += deltaY * 0.006;
+        previousMousePosition = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+      }
+    };
+    const onTouchEnd = () => {
+      isDragging = false;
+    };
+
+    currentMount.addEventListener("touchstart", onTouchStart, { passive: true });
+    window.addEventListener("touchmove", onTouchMove, { passive: true });
+    window.addEventListener("touchend", onTouchEnd);
+
+    // ==========================================
+    // 7. 60 FPS DYNAMIC ANIMATION LOOP
+    // ==========================================
     let animId;
-    let clock = new THREE.Clock();
+    const clock = new THREE.Clock();
 
     const animate = () => {
       animId = requestAnimationFrame(animate);
       const elapsedTime = clock.getElapsedTime();
 
-      // Smooth camera parallax
-      mainGroup.rotation.y += (targetRotationY - mainGroup.rotation.y) * 0.05;
-      mainGroup.rotation.x += (targetRotationX - mainGroup.rotation.x) * 0.05;
+      // Damped Parallax
+      if (!isDragging) {
+        mainGroup.rotation.y += (targetRotationY - mainGroup.rotation.y) * 0.05;
+        mainGroup.rotation.x += (targetRotationX - mainGroup.rotation.x) * 0.05;
+        globeGroup.rotation.y += 0.003; // Smooth continuous globe spin
+      }
 
-      // Animate Quantum Computing Core
-      crystalCore.rotation.y = elapsedTime * 0.45;
-      crystalCore.rotation.x = elapsedTime * 0.3;
-      outerCage.rotation.y = -elapsedTime * 0.35;
-      outerCage.rotation.z = elapsedTime * 0.22;
+      // Smooth radar pulse wave animation
+      radarRings.forEach((ring, i) => {
+        const waveScale = 1.0 + ((elapsedTime * 1.5 + i * 0.3) % 1) * 2.2;
+        ring.scale.set(waveScale, waveScale, 1);
+        ring.material.opacity = Math.max(0, 0.8 - ((elapsedTime * 1.5 + i * 0.3) % 1));
+      });
 
-      // Beating energy core heart
-      const pulseScale = 1.0 + Math.sin(elapsedTime * 3.5) * 0.08;
-      coreHeart.scale.set(pulseScale, pulseScale, pulseScale);
+      // Advance photon data packets along arcs
+      photonPulses.forEach((item) => {
+        item.progress = (item.progress + 0.008) % 1;
+        const pt = item.curve.getPoint(item.progress);
+        item.photon.position.copy(pt);
+      });
 
-      // Animate Orbital Rings
-      orbitRing1.rotation.z = elapsedTime * 0.5;
-      orbitRing2.rotation.x = elapsedTime * -0.4;
-      orbitRing3.rotation.y = elapsedTime * 0.35;
+      // Animate Orbiting Tech Satellites
+      satelliteMeshes.forEach((sat, i) => {
+        const { baseAngle, orbitRadiusX, orbitRadiusZ, orbitTilt, speed, name } = sat.userData;
+        const angle = baseAngle + elapsedTime * speed;
 
-      // Gentle Cloud Hub Bobbing
-      cyberHubGroup.position.y = -0.4 + Math.sin(elapsedTime * 0.9) * 0.06;
+        const x = Math.cos(angle) * orbitRadiusX;
+        const z = Math.sin(angle) * orbitRadiusZ;
+        const y = Math.sin(angle) * Math.sin(orbitTilt) * 1.8 + Math.sin(elapsedTime * 1.2 + i) * 0.12;
 
-      // Animate floating tech cubes and dynamic laser conduits
-      cubeMeshes.forEach((cube, i) => {
-        const { speed, initialY, index } = cube.userData;
-        cube.position.y = initialY + Math.sin(elapsedTime * speed + index) * 0.16;
-        cube.rotation.x += 0.008;
-        cube.rotation.y += 0.012;
+        sat.position.set(x, y, z);
+        sat.rotation.y += 0.012;
+        sat.rotation.x += 0.006;
 
-        const isHovered = hoveredTech && hoveredTech.name === cube.userData.name;
+        const isHovered = hoveredTech && hoveredTech.name === name;
         if (isHovered) {
-          cube.scale.lerp(new THREE.Vector3(1.22, 1.22, 1.22), 0.1);
+          sat.scale.lerp(new THREE.Vector3(1.25, 1.25, 1.25), 0.1);
         } else {
-          cube.scale.lerp(new THREE.Vector3(1.0, 1.0, 1.0), 0.1);
+          sat.scale.lerp(new THREE.Vector3(1.0, 1.0, 1.0), 0.1);
         }
 
-        // Update dynamic laser conduit endpoints
-        if (conduitLines[i]) {
-          const coreCenterY = cyberHubGroup.position.y + 0.35;
-          const posAttr = conduitLines[i].conduit.geometry.attributes.position;
-          posAttr.setXYZ(0, 0, coreCenterY, 0);
-          posAttr.setXYZ(1, cube.position.x, cube.position.y, cube.position.z);
+        // Dynamic laser conduit to nearest point on globe surface
+        if (satelliteConduits[i]) {
+          const globeSurfacePt = sat.position.clone().normalize().multiplyScalar(globeRadius * 1.04);
+          const posAttr = satelliteConduits[i].geometry.attributes.position;
+          posAttr.setXYZ(0, globeSurfacePt.x, globeSurfacePt.y, globeSurfacePt.z);
+          posAttr.setXYZ(1, sat.position.x, sat.position.y, sat.position.z);
           posAttr.needsUpdate = true;
-          conduitLines[i].conduit.material.opacity = isHovered ? 0.95 : 0.45;
+          satelliteConduits[i].material.opacity = isHovered ? 0.95 : 0.35;
         }
       });
 
-      // Slow particle rotation
-      particles.rotation.y = elapsedTime * 0.025;
+      // Rotate cosmic background particles
+      particles.rotation.y = elapsedTime * 0.02;
 
       renderer.render(scene, camera);
     };
@@ -424,7 +517,12 @@ const Hero3D = ({ onGetStarted }) => {
     window.addEventListener("resize", handleResize);
 
     return () => {
-      window.removeEventListener("mousemove", handleMouseMove);
+      currentMount.removeEventListener("mousedown", onMouseDown);
+      window.removeEventListener("mouseup", onMouseUp);
+      window.removeEventListener("mousemove", onMouseMove);
+      currentMount.removeEventListener("touchstart", onTouchStart);
+      window.removeEventListener("touchmove", onTouchMove);
+      window.removeEventListener("touchend", onTouchEnd);
       window.removeEventListener("resize", handleResize);
       cancelAnimationFrame(animId);
       if (currentMount && renderer.domElement) {
@@ -567,7 +665,7 @@ const Hero3D = ({ onGetStarted }) => {
             </div>
           </Col>
 
-          {/* Right Column: 3D Interactive Cloud Architecture & Tech Nodes */}
+          {/* Right Column: 3D Interactive Holographic Cyber Globe & Connected Cloud Network */}
           <Col lg={6} className="position-relative">
             <div
               className="hero-canvas-container position-relative"
@@ -594,14 +692,14 @@ const Hero3D = ({ onGetStarted }) => {
                     </span>
                   </div>
                   <span className="badge bg-primary text-white rounded-pill px-2 py-1 small ms-1">
-                    Live Node
+                    Cloud Satellite
                   </span>
                 </div>
               )}
 
               {/* 3D Hint Badge */}
               <div
-                className="position-absolute bg-white bg-opacity-90 px-3 py-1 rounded-pill shadow-sm border border-light-subtle small text-muted d-flex align-items-center gap-2"
+                className="position-absolute bg-white bg-opacity-95 px-3 py-1 rounded-pill shadow-sm border border-light-subtle small text-muted d-flex align-items-center gap-2"
                 style={{
                   bottom: "4%",
                   left: "50%",
@@ -611,7 +709,7 @@ const Hero3D = ({ onGetStarted }) => {
                 }}
               >
                 <Sparkles size={14} className="text-primary" />
-                <span>Move mouse to explore 3D Cloud Architecture & Tech Nodes</span>
+                <span>Drag to spin 3D Cyber Globe • Hover satellites to inspect stack</span>
               </div>
             </div>
           </Col>

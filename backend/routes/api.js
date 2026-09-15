@@ -136,13 +136,13 @@ router.get("/services", (req, res) => {
   res.json({ success: true, data: services });
 });
 
-// Stats (Screenshot 5)
+// Stats & Capabilities for Agile Startup Studio
 router.get("/stats", (req, res) => {
   const stats = [
-    { label: "Completed Project", value: "4000+", icon: "CheckSquare", description: "Delivered on-time with clean code" },
-    { label: "Happy Clients", value: "600+", icon: "Smile", description: "From startups to global enterprises" },
-    { label: "Multi Services", value: "500+", icon: "Target", description: "Full web, mobile, database & cloud" },
-    { label: "Retention Ratio", value: "95%", icon: "Award", description: "Long-term partnership & trust" }
+    { label: "Built To Your Vision", value: "100% Custom", icon: "Rocket", description: "Bespoke architecture engineered for your exact requirements" },
+    { label: "Fast-Track Delivery", value: "Rapid MVP", icon: "Zap", description: "From concept wireframes to live deployment in record weeks" },
+    { label: "Modern Tech Stacks", value: "Battle-Tested", icon: "Layers", description: "React 18, Flutter, Node.js, Laravel, MySQL & Python AI" },
+    { label: "100% Code Ownership", value: "Full Handover", icon: "ShieldCheck", description: "Complete IP handover, direct founder access & zero lock-in" }
   ];
   res.json({ success: true, data: stats });
 });
