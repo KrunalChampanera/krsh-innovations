@@ -12,6 +12,8 @@ frontend/dist-ssr/
 .env
 backend/.env
 backend/data/
+backend/uploads/*
+!backend/uploads/.gitkeep
 
 # Editor & OS files
 .vscode/

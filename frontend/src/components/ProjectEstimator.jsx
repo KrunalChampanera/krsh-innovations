@@ -278,7 +278,7 @@ const ProjectEstimator = ({ preselectedService }) => {
                       value={clientName}
                       onChange={(e) => setClientName(e.target.value)}
                       required
-                      className="bg-dark text-white border-secondary rounded-3 py-2"
+                      className="dark-input-white-text rounded-3 py-2"
                     />
                   </div>
                   <div className="mb-3">
@@ -288,7 +288,7 @@ const ProjectEstimator = ({ preselectedService }) => {
                       value={clientEmail}
                       onChange={(e) => setClientEmail(e.target.value)}
                       required
-                      className="bg-dark text-white border-secondary rounded-3 py-2"
+                      className="dark-input-white-text rounded-3 py-2"
                     />
                   </div>
                   <div className="mb-3">
@@ -298,7 +298,7 @@ const ProjectEstimator = ({ preselectedService }) => {
                       placeholder="Additional Project Details (Optional)"
                       value={notes}
                       onChange={(e) => setNotes(e.target.value)}
-                      className="bg-dark text-white border-secondary rounded-3 py-2"
+                      className="dark-input-white-text rounded-3 py-2"
                     />
                   </div>
 

@@ -1,5 +1,7 @@
 const express = require("express");
 const router = express.Router();
+const fs = require("fs");
+const path = require("path");
 const db = require("../config/db");
 
 const COMPANY_INFO = {
@@ -143,6 +145,54 @@ router.get("/stats", (req, res) => {
     { label: "Retention Ratio", value: "95%", icon: "Award", description: "Long-term partnership & trust" }
   ];
   res.json({ success: true, data: stats });
+});
+
+// ========================
+// IMAGE FILE UPLOAD
+// ========================
+router.post("/upload", async (req, res) => {
+  try {
+    const { image, filename: clientFilename } = req.body;
+    if (!image) {
+      return res.status(400).json({ success: false, error: "No image file data provided" });
+    }
+
+    // Match base64 data URL
+    const matches = image.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/);
+    if (!matches || matches.length !== 3) {
+      return res.status(400).json({ success: false, error: "Invalid base64 image data" });
+    }
+
+    const mimeType = matches[1];
+    const base64Data = matches[2];
+    let ext = mimeType.split("/")[1] || "png";
+    if (ext === "jpeg") ext = "jpg";
+    ext = ext.replace(/[^a-z0-9]/gi, "");
+
+    const uploadsDir = path.join(__dirname, "..", "uploads");
+    if (!fs.existsSync(uploadsDir)) {
+      fs.mkdirSync(uploadsDir, { recursive: true });
+    }
+
+    const cleanBaseName = clientFilename
+      ? path.parse(clientFilename).name.replace(/[^a-zA-Z0-9_-]/g, "_")
+      : "project";
+    const uniqueName = `${cleanBaseName}_${Date.now()}_${Math.random().toString(36).substring(2, 6)}.${ext}`;
+    const filePath = path.join(uploadsDir, uniqueName);
+
+    await fs.promises.writeFile(filePath, Buffer.from(base64Data, "base64"));
+
+    const publicUrl = `/uploads/${uniqueName}`;
+    res.status(201).json({
+      success: true,
+      url: publicUrl,
+      filename: uniqueName,
+      message: "Image uploaded successfully!"
+    });
+  } catch (error) {
+    console.error("Upload error:", error);
+    res.status(500).json({ success: false, error: error.message });
+  }
 });
 
 // ========================

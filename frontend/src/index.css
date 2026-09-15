@@ -758,3 +758,66 @@ h1, h2, h3, h4, h5, h6 {
   gap: 4px;
 }
 
+/* ========================================================
+   HIGH-CONTRAST CRISP WHITE INPUTS FOR DARK SECTIONS
+   ======================================================== */
+.footer-email-input,
+.dark-input-white-text {
+  background-color: rgba(255, 255, 255, 0.12) !important;
+  border: 1px solid rgba(255, 255, 255, 0.28) !important;
+  color: #ffffff !important;
+  font-size: 0.92rem !important;
+  font-weight: 500 !important;
+  caret-color: #ffffff !important;
+}
+
+.footer-email-input:focus,
+.dark-input-white-text:focus {
+  background-color: rgba(255, 255, 255, 0.18) !important;
+  border-color: #00a2ea !important;
+  color: #ffffff !important;
+  box-shadow: 0 0 0 3px rgba(0, 162, 234, 0.35) !important;
+}
+
+.footer-email-input::placeholder,
+.dark-input-white-text::placeholder {
+  color: #cbd5e1 !important;
+  opacity: 0.85 !important;
+  font-weight: 400 !important;
+}
+
+/* Chrome/Edge autofill override for dark inputs so text stays bright white */
+.footer-email-input:-webkit-autofill,
+.footer-email-input:-webkit-autofill:hover,
+.footer-email-input:-webkit-autofill:focus,
+.footer-email-input:-webkit-autofill:active,
+.dark-input-white-text:-webkit-autofill,
+.dark-input-white-text:-webkit-autofill:hover,
+.dark-input-white-text:-webkit-autofill:focus,
+.dark-input-white-text:-webkit-autofill:active {
+  -webkit-text-fill-color: #ffffff !important;
+  -webkit-box-shadow: 0 0 0px 1000px #1e293b inset !important;
+  caret-color: #ffffff !important;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+/* ========================================================
+   ADMIN IMAGE UPLOAD DROP ZONE
+   ======================================================== */
+.admin-upload-dropzone {
+  border: 2px dashed #00a2ea;
+  border-radius: 12px;
+  background: #f0f9ff;
+  padding: 24px 16px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.admin-upload-dropzone:hover {
+  background: #e0f2fe;
+  border-color: #0284c7;
+  transform: translateY(-1px);
+}
+
+

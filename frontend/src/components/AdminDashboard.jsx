@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   Row,
   Col,
@@ -23,7 +23,9 @@ import {
   Trash2,
   Edit,
   CheckCircle,
-  Database
+  Database,
+  UploadCloud,
+  Check
 } from "lucide-react";
 
 const AdminDashboard = ({ onBackToSite, dbStatus }) => {
@@ -47,6 +49,70 @@ const AdminDashboard = ({ onBackToSite, dbStatus }) => {
     description: "",
     project_url: "https://github.com"
   });
+
+  // Image Upload State
+  const [uploadingImage, setUploadingImage] = useState(false);
+  const [uploadSuccess, setUploadSuccess] = useState(null);
+  const fileInputRef = useRef(null);
+
+  const handleFileUpload = async (e) => {
+    const file = e.target.files && e.target.files[0];
+    if (!file) return;
+
+    if (!file.type.startsWith("image/")) {
+      setAlert({ type: "danger", text: "Please select a valid image file (PNG, JPG, WEBP, etc.)" });
+      return;
+    }
+
+    if (file.size > 15 * 1024 * 1024) {
+      setAlert({ type: "danger", text: "Image file is too large. Maximum size is 15MB." });
+      return;
+    }
+
+    setUploadingImage(true);
+    setUploadSuccess(null);
+
+    const reader = new FileReader();
+    reader.onload = async () => {
+      try {
+        const base64Data = reader.result;
+        const res = await fetch("/api/upload", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            image: base64Data,
+            filename: file.name
+          })
+        });
+
+        const data = await res.json();
+        if (data.success && data.url) {
+          setGalleryForm((prev) => ({
+            ...prev,
+            image_url: data.url
+          }));
+          setUploadSuccess(file.name);
+          setAlert({ type: "success", text: `Image "${file.name}" uploaded successfully to server!` });
+        } else {
+          setGalleryForm((prev) => ({
+            ...prev,
+            image_url: base64Data
+          }));
+          setUploadSuccess(file.name);
+        }
+      } catch (err) {
+        console.error("Upload error:", err);
+        setGalleryForm((prev) => ({
+          ...prev,
+          image_url: reader.result
+        }));
+        setUploadSuccess(file.name);
+      } finally {
+        setUploadingImage(false);
+      }
+    };
+    reader.readAsDataURL(file);
+  };
 
   // Quotes State
   const [quotes, setQuotes] = useState([]);
@@ -786,23 +852,87 @@ const AdminDashboard = ({ onBackToSite, dbStatus }) => {
               </Col>
               <Col md={12}>
                 <Form.Group>
-                  <Form.Label className="small fw-bold">Photo Image URL *</Form.Label>
+                  <div className="d-flex justify-content-between align-items-center mb-1">
+                    <Form.Label className="small fw-bold mb-0">Project Photo / Image *</Form.Label>
+                    {uploadSuccess && (
+                      <span className="badge bg-success text-white small d-inline-flex align-items-center gap-1">
+                        <Check size={12} /> {uploadSuccess}
+                      </span>
+                    )}
+                  </div>
+
+                  {/* 1. Drag & Drop / Click to Upload Image File */}
+                  <div
+                    className="admin-upload-dropzone mb-3"
+                    onClick={() => fileInputRef.current?.click()}
+                  >
+                    <input
+                      type="file"
+                      ref={fileInputRef}
+                      accept="image/*"
+                      className="d-none"
+                      onChange={handleFileUpload}
+                    />
+                    <div className="d-flex flex-column align-items-center gap-2">
+                      <div className="p-2 rounded-circle bg-primary bg-opacity-10 text-primary">
+                        <UploadCloud size={28} />
+                      </div>
+                      <div>
+                        <div className="fw-bold text-primary">Click to Browse or Drag & Drop Image File</div>
+                        <div className="small text-muted">Supports PNG, JPG, WEBP, SVG (Uploads directly to server)</div>
+                      </div>
+                      {uploadingImage && (
+                        <div className="d-flex align-items-center gap-2 text-primary small mt-1">
+                          <Spinner animation="border" size="sm" />
+                          <span>Uploading image to server...</span>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Live Image Preview */}
+                  {galleryForm.image_url && (
+                    <div className="mb-3 p-2 bg-light border rounded-3 text-center">
+                      <div className="small text-muted mb-1 fw-semibold">Live Image Preview:</div>
+                      <img
+                        src={galleryForm.image_url}
+                        alt="Project Preview"
+                        className="rounded-3 shadow-sm"
+                        style={{ maxHeight: "170px", maxWidth: "100%", objectFit: "cover" }}
+                        onError={(e) => {
+                          e.target.src = "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80";
+                        }}
+                      />
+                      <div className="small text-muted mt-1 font-monospace" style={{ fontSize: "11px" }}>
+                        {galleryForm.image_url}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* 2. Direct Image URL / Presets alternative */}
+                  <div className="small text-muted fw-semibold mb-1">Or enter direct Image URL / Presets:</div>
                   <Form.Control
-                    type="url"
+                    type="text"
                     required
-                    placeholder="https://..."
+                    placeholder="https://... or /uploads/..."
                     value={galleryForm.image_url}
-                    onChange={(e) => setGalleryForm({ ...galleryForm, image_url: e.target.value })}
+                    onChange={(e) => {
+                      setGalleryForm({ ...galleryForm, image_url: e.target.value });
+                      setUploadSuccess(null);
+                    }}
                   />
                   <div className="d-flex flex-wrap gap-1 mt-2">
-                    <span className="small text-muted me-2">Presets:</span>
+                    <span className="small text-muted me-2">Quick Presets:</span>
                     {imagePresets.map((preset, idx) => (
                       <button
                         key={idx}
                         type="button"
                         className="badge bg-light text-dark border px-2 py-1"
                         style={{ cursor: "pointer" }}
-                        onClick={() => setGalleryForm({ ...galleryForm, image_url: preset.url })}
+                        onClick={() => {
+                          setGalleryForm({ ...galleryForm, image_url: preset.url });
+                          setUploadSuccess(null);
+                        }}
                       >
                         {preset.label}
                       </button>

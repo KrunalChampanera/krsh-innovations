@@ -114,7 +114,7 @@ const Footer = ({ onOpenAdmin }) => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                className="bg-secondary bg-opacity-25 border-secondary text-white small rounded-3 py-2"
+                className="footer-email-input small rounded-3 py-2"
               />
               <Button
                 type="submit"
