@@ -17,6 +17,11 @@
   box-sizing: border-box;
 }
 
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 86px;
+}
+
 body {
   margin: 0;
   font-family: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
@@ -24,6 +29,19 @@ body {
   background-color: #ffffff;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
+}
+
+/* Hero Section Spacing - Perfectly clears the fixed-top navbar */
+.hero-section {
+  padding-top: 110px !important;
+  padding-bottom: 4rem;
+}
+
+@media (min-width: 992px) {
+  .hero-section {
+    padding-top: 128px !important;
+    padding-bottom: 5rem;
+  }
 }
 
 h1, h2, h3, h4, h5, h6 {

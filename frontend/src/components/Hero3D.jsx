@@ -367,7 +367,7 @@ const Hero3D = ({ onGetStarted }) => {
   }, [hoveredTech]);
 
   return (
-    <section id="home" className="pt-5 pb-5 mt-4 position-relative overflow-hidden" style={{ minHeight: "88vh" }}>
+    <section id="home" className="hero-section position-relative overflow-hidden" style={{ minHeight: "88vh" }}>
       {/* Subtle geometric background accents matching screenshot 2/3 style */}
       <div
         style={{
