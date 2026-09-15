@@ -868,5 +868,48 @@ h1, h2, h3, h4, h5, h6 {
   }
 }
 
+/* ========================================================
+   HERO ARCHITECTURE SHOWCASE TABS (Hover & Active Fix)
+   ======================================================== */
+.hero-arch-tab {
+  background: rgba(255, 255, 255, 0.08) !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  font-size: 12px;
+  font-family: monospace;
+  transition: all 0.22s ease-in-out;
+  cursor: pointer;
+  outline: none;
+  text-decoration: none;
+}
+
+.hero-arch-tab * {
+  color: #ffffff !important;
+}
+
+.hero-arch-tab:hover {
+  background: rgba(0, 162, 234, 0.35) !important;
+  color: #ffffff !important;
+  border-color: #00a2ea !important;
+  box-shadow: 0 4px 14px rgba(0, 162, 234, 0.35) !important;
+  transform: translateY(-1px);
+}
+
+.hero-arch-tab:hover * {
+  color: #ffffff !important;
+}
+
+.hero-arch-tab.active {
+  background: #00a2ea !important;
+  color: #ffffff !important;
+  border-color: #00a2ea !important;
+  box-shadow: 0 4px 16px rgba(0, 162, 234, 0.5) !important;
+}
+
+.hero-arch-tab.active * {
+  color: #ffffff !important;
+}
+
+
 
 

@@ -240,38 +240,32 @@ const Hero3D = ({ onGetStarted }) => {
                     <button
                       type="button"
                       onClick={() => setActiveTab("web")}
-                      className={`btn btn-sm rounded-pill px-3 py-1 font-monospace transition-all ${
-                        activeTab === "web"
-                          ? "btn-primary shadow-sm"
-                          : "btn-outline-secondary text-secondary border-secondary border-opacity-50"
+                      className={`hero-arch-tab rounded-pill px-3 py-1 d-inline-flex align-items-center gap-1 ${
+                        activeTab === "web" ? "active" : ""
                       }`}
-                      style={{ fontSize: "12px" }}
                     >
-                      <Code2 size={13} className="me-1" /> Web Core
+                      <Code2 size={13} className="text-white" />
+                      <span className="text-white fw-semibold">Web Core</span>
                     </button>
                     <button
                       type="button"
                       onClick={() => setActiveTab("mobile")}
-                      className={`btn btn-sm rounded-pill px-3 py-1 font-monospace transition-all ${
-                        activeTab === "mobile"
-                          ? "btn-primary shadow-sm"
-                          : "btn-outline-secondary text-secondary border-secondary border-opacity-50"
+                      className={`hero-arch-tab rounded-pill px-3 py-1 d-inline-flex align-items-center gap-1 ${
+                        activeTab === "mobile" ? "active" : ""
                       }`}
-                      style={{ fontSize: "12px" }}
                     >
-                      <Smartphone size={13} className="me-1" /> Mobile Engine
+                      <Smartphone size={13} className="text-white" />
+                      <span className="text-white fw-semibold">Mobile Engine</span>
                     </button>
                     <button
                       type="button"
                       onClick={() => setActiveTab("backend")}
-                      className={`btn btn-sm rounded-pill px-3 py-1 font-monospace transition-all ${
-                        activeTab === "backend"
-                          ? "btn-primary shadow-sm"
-                          : "btn-outline-secondary text-secondary border-secondary border-opacity-50"
+                      className={`hero-arch-tab rounded-pill px-3 py-1 d-inline-flex align-items-center gap-1 ${
+                        activeTab === "backend" ? "active" : ""
                       }`}
-                      style={{ fontSize: "12px" }}
                     >
-                      <Server size={13} className="me-1" /> Backend & DB
+                      <Server size={13} className="text-white" />
+                      <span className="text-white fw-semibold">Backend & DB</span>
                     </button>
                   </div>
 
