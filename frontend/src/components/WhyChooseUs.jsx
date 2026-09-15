@@ -16,9 +16,9 @@ const WhyChooseUs = () => {
           </p>
         </div>
 
-        <Row className="align-items-center gy-5">
+        <Row className="align-items-center gy-4 gy-lg-5">
           {/* Left Column: Client First & Strong Expertise */}
-          <Col lg={4} md={6}>
+          <Col lg={4} md={12} className="mb-4 mb-lg-0">
             {/* Feature 1 */}
             <div className="feature-item">
               <div className="feature-icon-circle">
@@ -50,8 +50,8 @@ const WhyChooseUs = () => {
             </div>
           </Col>
 
-          {/* Center Column: 3D App / Device Mockup (Screenshot 4 Elevation) */}
-          <Col lg={4} className="d-flex justify-content-center position-relative my-4 my-lg-0">
+          {/* Center Column: 3D App / Device Mockup */}
+          <Col lg={4} md={12} className="d-flex justify-content-center position-relative my-5 my-lg-0 py-3">
             {/* Glowing background halo */}
             <div
               style={{
@@ -74,9 +74,11 @@ const WhyChooseUs = () => {
                 {/* Simulated Header */}
                 <div className="d-flex align-items-center justify-content-between pb-2 mb-3 border-bottom">
                   <div className="d-flex align-items-center gap-2">
-                    <div className="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center" style={{ width: "24px", height: "24px", fontSize: "10px", fontWeight: "bold" }}>
-                      KI
-                    </div>
+                    <img
+                      src="/logo.png"
+                      alt="KI"
+                      style={{ width: "26px", height: "26px", objectFit: "contain", borderRadius: "6px", background: "#fff" }}
+                    />
                     <div>
                       <div className="fw-bold" style={{ fontSize: "11px" }}>Krsh Innovations</div>
                       <div className="text-success" style={{ fontSize: "9px" }}>● Active Engineering</div>
@@ -117,7 +119,7 @@ const WhyChooseUs = () => {
           </Col>
 
           {/* Right Column: On time Delivery & Post Development Support */}
-          <Col lg={4} md={6}>
+          <Col lg={4} md={12} className="mt-4 mt-lg-0">
             {/* Feature 3 */}
             <div className="feature-item">
               <div className="feature-icon-circle">

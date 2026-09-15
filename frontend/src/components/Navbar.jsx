@@ -47,9 +47,26 @@ const NavigationBar = ({ onOpenAdmin }) => {
       <Container className="d-flex align-items-center justify-content-between">
         {/* Brand Logo & Name */}
         <Navbar.Brand href="#home" className="d-flex align-items-center gap-2 m-0 p-0">
-          <div className="brand-badge">
-            <Layers size={20} className="text-white flex-shrink-0" />
-            <span className="brand-text">Krsh.Innovations</span>
+          <img
+            src="/logo.png"
+            alt="Krsh Innovations"
+            style={{
+              height: "44px",
+              width: "44px",
+              objectFit: "contain",
+              borderRadius: "10px",
+              background: "#ffffff",
+              padding: "2px",
+              boxShadow: "0 2px 8px rgba(0, 162, 234, 0.25)"
+            }}
+          />
+          <div className="d-flex flex-column">
+            <span className="brand-text fw-bold fs-5 text-dark" style={{ lineHeight: "1.1", letterSpacing: "-0.5px" }}>
+              Krsh.<span style={{ color: "#00a2ea" }}>Innovations</span>
+            </span>
+            <span className="text-muted fw-semibold" style={{ fontSize: "10px", letterSpacing: "0.8px", textTransform: "uppercase" }}>
+              IT & Startup Studio
+            </span>
           </div>
         </Navbar.Brand>
 

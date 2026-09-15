@@ -1,536 +1,23 @@
-import React, { useEffect, useRef, useState } from "react";
-import { Container, Row, Col, Button, Badge } from "react-bootstrap";
-import * as THREE from "three";
-import { ArrowRight, Sparkles, CheckCircle2, Code2, Smartphone, Database, Layers, Terminal } from "lucide-react";
-
-// Helper to generate crisp, futuristic canvas textures for 3D Tech Nodes
-const createTechCubeTexture = (name, symbol, subtitle, bgColor, textColor = "#ffffff") => {
-  const canvas = document.createElement("canvas");
-  canvas.width = 512;
-  canvas.height = 512;
-  const ctx = canvas.getContext("2d");
-
-  // Deep tech gradient background
-  const grad = ctx.createLinearGradient(0, 0, 512, 512);
-  grad.addColorStop(0, bgColor);
-  grad.addColorStop(0.65, "#0a1226");
-  grad.addColorStop(1, "#030712");
-  ctx.fillStyle = grad;
-  ctx.fillRect(0, 0, 512, 512);
-
-  // Outer Glowing Cyber Border
-  ctx.strokeStyle = "rgba(0, 162, 234, 0.85)";
-  ctx.lineWidth = 14;
-  ctx.strokeRect(18, 18, 476, 476);
-
-  // Inner Thin Border
-  ctx.strokeStyle = "rgba(255, 255, 255, 0.35)";
-  ctx.lineWidth = 3;
-  ctx.strokeRect(30, 30, 452, 452);
-
-  // High-Tech Corner Brackets
-  ctx.fillStyle = "#38bdf8";
-  ctx.fillRect(18, 18, 40, 7);
-  ctx.fillRect(18, 18, 7, 40);
-  ctx.fillRect(454, 18, 40, 7);
-  ctx.fillRect(487, 18, 7, 40);
-  ctx.fillRect(18, 487, 40, 7);
-  ctx.fillRect(18, 454, 7, 40);
-  ctx.fillRect(454, 487, 40, 7);
-  ctx.fillRect(487, 454, 7, 40);
-
-  // Center Radial Tech Glow behind symbol
-  const glowGrad = ctx.createRadialGradient(256, 180, 10, 256, 180, 120);
-  glowGrad.addColorStop(0, "rgba(56, 189, 248, 0.35)");
-  glowGrad.addColorStop(1, "rgba(0, 0, 0, 0)");
-  ctx.fillStyle = glowGrad;
-  ctx.beginPath();
-  ctx.arc(256, 180, 120, 0, Math.PI * 2);
-  ctx.fill();
-
-  // Tech Symbol / Icon
-  ctx.font = "bold 130px sans-serif";
-  ctx.textAlign = "center";
-  ctx.textBaseline = "middle";
-  ctx.fillStyle = textColor;
-  ctx.fillText(symbol, 256, 180);
-
-  // Tech Name Label
-  ctx.font = "bold 44px 'Plus Jakarta Sans', -apple-system, sans-serif";
-  ctx.fillStyle = "#ffffff";
-  ctx.fillText(name, 256, 330);
-
-  // Architecture Subtitle
-  ctx.font = "600 24px 'Plus Jakarta Sans', sans-serif";
-  ctx.fillStyle = "#38bdf8";
-  ctx.fillText(subtitle, 256, 385);
-
-  // Krsh Cloud Node Tag
-  ctx.font = "600 18px 'Plus Jakarta Sans', sans-serif";
-  ctx.fillStyle = "rgba(255, 255, 255, 0.7)";
-  ctx.fillText("Krsh Cloud Architecture", 256, 435);
-
-  const texture = new THREE.CanvasTexture(canvas);
-  texture.anisotropy = 8;
-  return texture;
-};
+import React, { useState } from "react";
+import { Container, Row, Col, Badge } from "react-bootstrap";
+import {
+  ArrowRight,
+  Sparkles,
+  CheckCircle2,
+  Code2,
+  Smartphone,
+  Server,
+  Layers,
+  Terminal,
+  Cpu,
+  ShieldCheck,
+  Zap,
+  Globe,
+  Activity
+} from "lucide-react";
 
 const Hero3D = ({ onGetStarted }) => {
-  const mountRef = useRef(null);
-  const [hoveredTech, setHoveredTech] = useState(null);
-
-  useEffect(() => {
-    const currentMount = mountRef.current;
-    if (!currentMount) return;
-
-    // 1. Scene & Camera Setup
-    const scene = new THREE.Scene();
-    const width = currentMount.clientWidth || 550;
-    const height = currentMount.clientHeight || 500;
-
-    const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 100);
-    camera.position.set(0, 0.4, 7.8);
-
-    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-    renderer.setSize(width, height);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    renderer.shadowMap.enabled = true;
-    currentMount.appendChild(renderer.domElement);
-
-    // Root interactive pivot
-    const mainGroup = new THREE.Group();
-    scene.add(mainGroup);
-
-    // ==========================================
-    // 2. BUILD 3D HOLOGRAPHIC CYBER CLOUD GLOBE
-    // ==========================================
-    const globeGroup = new THREE.Group();
-    globeGroup.position.set(0, 0.1, 0);
-    mainGroup.add(globeGroup);
-
-    const globeRadius = 1.95;
-
-    // A. Inner Translucent Dark Cyber Sphere
-    const innerSphereGeo = new THREE.SphereGeometry(globeRadius, 40, 40);
-    const innerSphereMat = new THREE.MeshStandardMaterial({
-      color: 0x050c1a,
-      metalness: 0.9,
-      roughness: 0.2,
-      transparent: true,
-      opacity: 0.94
-    });
-    const innerGlobe = new THREE.Mesh(innerSphereGeo, innerSphereMat);
-    globeGroup.add(innerGlobe);
-
-    // B. Outer Luminous Geodesic Wireframe
-    const latticeGeo = new THREE.IcosahedronGeometry(globeRadius * 1.03, 3);
-    const latticeMat = new THREE.MeshBasicMaterial({
-      color: 0x00a2ea,
-      wireframe: true,
-      transparent: true,
-      opacity: 0.28
-    });
-    const latticeMesh = new THREE.Mesh(latticeGeo, latticeMat);
-    globeGroup.add(latticeMesh);
-
-    // C. Fibonacci Point-Cloud Matrix on Surface (420 data nodes)
-    const pointCount = 420;
-    const pointPositions = new Float32Array(pointCount * 3);
-    const goldenRatio = (1 + Math.sqrt(5)) / 2;
-    for (let i = 0; i < pointCount; i++) {
-      const theta = 2 * Math.PI * i / goldenRatio;
-      const phi = Math.acos(1 - 2 * (i + 0.5) / pointCount);
-      const r = globeRadius * 1.035;
-      pointPositions[i * 3] = r * Math.sin(phi) * Math.cos(theta);
-      pointPositions[i * 3 + 1] = r * Math.sin(phi) * Math.sin(theta);
-      pointPositions[i * 3 + 2] = r * Math.cos(phi);
-    }
-    const pointCloudGeo = new THREE.BufferGeometry();
-    pointCloudGeo.setAttribute("position", new THREE.BufferAttribute(pointPositions, 3));
-    const pointCloudMat = new THREE.PointsMaterial({
-      size: 0.045,
-      color: 0x38bdf8,
-      transparent: true,
-      opacity: 0.75
-    });
-    const pointCloud = new THREE.Points(pointCloudGeo, pointCloudMat);
-    globeGroup.add(pointCloud);
-
-    // D. Glowing Meridian & Latitude Coordinate Bands
-    const ring1Geo = new THREE.TorusGeometry(globeRadius * 1.04, 0.015, 16, 90);
-    const ringMat = new THREE.MeshBasicMaterial({ color: 0x00a2ea, transparent: true, opacity: 0.45 });
-    const equatorRing = new THREE.Mesh(ring1Geo, ringMat);
-    equatorRing.rotation.x = Math.PI / 2;
-    globeGroup.add(equatorRing);
-
-    const meridian1 = new THREE.Mesh(ring1Geo, ringMat);
-    meridian1.rotation.y = 0.8;
-    globeGroup.add(meridian1);
-
-    const meridian2 = new THREE.Mesh(ring1Geo, ringMat);
-    meridian2.rotation.y = -0.8;
-    globeGroup.add(meridian2);
-
-    // E. Global Regional Cloud Hub Beacons & Radar Pulse Rings
-    const hubCoords = [
-      { name: "Silicon Valley", lat: 37, lon: -122, color: 0x00a2ea },
-      { name: "London", lat: 51, lon: 0, color: 0x10b981 },
-      { name: "Singapore", lat: 1.3, lon: 103, color: 0x38bdf8 },
-      { name: "Tokyo", lat: 35, lon: 139, color: 0x818cf8 },
-      { name: "Frankfurt", lat: 50, lon: 8.6, color: 0x00a2ea },
-      { name: "Sydney", lat: -33, lon: 151, color: 0xf59e0b }
-    ];
-
-    const convertGeoToVector = (lat, lon, r) => {
-      const phi = (90 - lat) * (Math.PI / 180);
-      const theta = (lon + 180) * (Math.PI / 180);
-      return new THREE.Vector3(
-        -r * Math.sin(phi) * Math.cos(theta),
-        r * Math.cos(phi),
-        r * Math.sin(phi) * Math.sin(theta)
-      );
-    };
-
-    const hubVectors = [];
-    const radarRings = [];
-    const beaconGeo = new THREE.SphereGeometry(0.07, 16, 16);
-
-    hubCoords.forEach((hub) => {
-      const v = convertGeoToVector(hub.lat, hub.lon, globeRadius * 1.035);
-      hubVectors.push(v);
-
-      const beaconMat = new THREE.MeshBasicMaterial({ color: hub.color });
-      const beacon = new THREE.Mesh(beaconGeo, beaconMat);
-      beacon.position.copy(v);
-      globeGroup.add(beacon);
-
-      // Radar Pulse Ring lying tangential to surface
-      const ringGeo = new THREE.RingGeometry(0.08, 0.12, 32);
-      const ringMat = new THREE.MeshBasicMaterial({
-        color: hub.color,
-        side: THREE.DoubleSide,
-        transparent: true,
-        opacity: 0.7
-      });
-      const radarRing = new THREE.Mesh(ringGeo, ringMat);
-      radarRing.position.copy(v);
-      radarRing.lookAt(new THREE.Vector3(0, 0, 0));
-      globeGroup.add(radarRing);
-      radarRings.push(radarRing);
-    });
-
-    // F. 3D Laser Flight/Data Arcs Connecting Hubs
-    const arcPairs = [
-      [0, 1], // Silicon Valley -> London
-      [1, 4], // London -> Frankfurt
-      [4, 2], // Frankfurt -> Singapore
-      [2, 3], // Singapore -> Tokyo
-      [3, 5]  // Tokyo -> Sydney
-    ];
-
-    const photonPulses = [];
-    const arcCurves = [];
-
-    arcPairs.forEach(([idxA, idxB]) => {
-      const pA = hubVectors[idxA];
-      const pB = hubVectors[idxB];
-      const mid = pA.clone().add(pB).multiplyScalar(0.5);
-      const dist = pA.distanceTo(pB);
-      mid.normalize().multiplyScalar(globeRadius * (1.18 + dist * 0.08));
-
-      const curve = new THREE.QuadraticBezierCurve3(pA, mid, pB);
-      arcCurves.push(curve);
-
-      const points = curve.getPoints(40);
-      const lineGeo = new THREE.BufferGeometry().setFromPoints(points);
-      const lineMat = new THREE.LineBasicMaterial({
-        color: 0x38bdf8,
-        transparent: true,
-        opacity: 0.55
-      });
-      const arcLine = new THREE.Line(lineGeo, lineMat);
-      globeGroup.add(arcLine);
-
-      // Traveling Photon Data Packet
-      const photonGeo = new THREE.SphereGeometry(0.045, 12, 12);
-      const photonMat = new THREE.MeshBasicMaterial({ color: 0xffffff });
-      const photon = new THREE.Mesh(photonGeo, photonMat);
-      globeGroup.add(photon);
-      photonPulses.push({ photon, curve, progress: Math.random() });
-    });
-
-    // G. Inner Radiant Glowing Core
-    const innerLight = new THREE.PointLight(0x00a2ea, 4.0, 10);
-    innerLight.position.set(0, 0, 0);
-    globeGroup.add(innerLight);
-
-    // ====================================================
-    // 3. 6 FLOATING 3D TECH SATELLITES IN PLANETARY ORBIT
-    // ====================================================
-    const techData = [
-      { name: "React 18", symbol: "⚛", subtitle: "Frontend & 3D Web", color: "#0284c7" },
-      { name: "Flutter", symbol: "📱", subtitle: "iOS & Android Apps", color: "#0ea5e9" },
-      { name: "Node.js", symbol: "🟢", subtitle: "APIs & Microservices", color: "#10b981" },
-      { name: "PHP Laravel", symbol: "⚡", subtitle: "Enterprise Backend", color: "#dc2626" },
-      { name: "MySQL 8", symbol: "🐬", subtitle: "Cloud Databases", color: "#0369a1" },
-      { name: "Python AI", symbol: "🐍", subtitle: "Neural & ML Models", color: "#d97706" }
-    ];
-
-    const satelliteMeshes = [];
-    const satelliteConduits = [];
-    const satGeo = new THREE.BoxGeometry(0.72, 0.72, 0.72);
-
-    techData.forEach((tech, index) => {
-      const texture = createTechCubeTexture(tech.name, tech.symbol, tech.subtitle, tech.color);
-      const satMat = new THREE.MeshStandardMaterial({
-        map: texture,
-        metalness: 0.45,
-        roughness: 0.25
-      });
-
-      const satellite = new THREE.Mesh(satGeo, satMat);
-      satellite.userData = {
-        ...tech,
-        baseAngle: index * (Math.PI * 2 / techData.length),
-        orbitRadiusX: 3.45,
-        orbitRadiusZ: 2.7,
-        orbitTilt: 0.32,
-        speed: 0.35 + (index % 2) * 0.05
-      };
-      mainGroup.add(satellite);
-      satelliteMeshes.push(satellite);
-
-      // Connector laser conduit from satellite to globe center
-      const linePositions = new Float32Array(6);
-      const conduitGeo = new THREE.BufferGeometry();
-      conduitGeo.setAttribute("position", new THREE.BufferAttribute(linePositions, 3));
-      const conduitMat = new THREE.LineBasicMaterial({
-        color: 0x00a2ea,
-        transparent: true,
-        opacity: 0.4
-      });
-      const conduit = new THREE.Line(conduitGeo, conduitMat);
-      mainGroup.add(conduit);
-      satelliteConduits.push(conduit);
-    });
-
-    // 4. Subtle Cosmic Ambient Particles
-    const particleCount = 180;
-    const particleGeo = new THREE.BufferGeometry();
-    const particlePositions = new Float32Array(particleCount * 3);
-    for (let i = 0; i < particleCount * 3; i += 3) {
-      particlePositions[i] = (Math.random() - 0.5) * 14;
-      particlePositions[i + 1] = (Math.random() - 0.5) * 10;
-      particlePositions[i + 2] = (Math.random() - 0.5) * 10;
-    }
-    particleGeo.setAttribute("position", new THREE.BufferAttribute(particlePositions, 3));
-    const particleMat = new THREE.PointsMaterial({
-      size: 0.045,
-      color: 0x38bdf8,
-      transparent: true,
-      opacity: 0.65
-    });
-    const particles = new THREE.Points(particleGeo, particleMat);
-    scene.add(particles);
-
-    // 5. Scene Lighting
-    const ambientLight = new THREE.AmbientLight(0xffffff, 1.3);
-    scene.add(ambientLight);
-
-    const dirLight = new THREE.DirectionalLight(0xffffff, 2.0);
-    dirLight.position.set(5, 7, 6);
-    scene.add(dirLight);
-
-    const cyanRimLight = new THREE.PointLight(0x38bdf8, 2.5, 9);
-    cyanRimLight.position.set(-3.5, 2.5, 3);
-    scene.add(cyanRimLight);
-
-    const purpleRimLight = new THREE.PointLight(0x818cf8, 2.2, 9);
-    purpleRimLight.position.set(3.5, -2, 3);
-    scene.add(purpleRimLight);
-
-    // ==========================================
-    // 6. INTERACTIVE MOUSE & DRAG-TO-SPIN LOGIC
-    // ==========================================
-    const raycaster = new THREE.Raycaster();
-    const mouse = new THREE.Vector2(-1000, -1000);
-    let targetRotationX = 0;
-    let targetRotationY = 0;
-
-    let isDragging = false;
-    let previousMousePosition = { x: 0, y: 0 };
-    let dragVelocity = { x: 0, y: 0 };
-
-    const onMouseDown = (e) => {
-      isDragging = true;
-      previousMousePosition = { x: e.clientX, y: e.clientY };
-    };
-
-    const onMouseUp = () => {
-      isDragging = false;
-    };
-
-    const onMouseMove = (event) => {
-      const rect = currentMount.getBoundingClientRect();
-      const x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
-      const y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
-
-      mouse.x = x;
-      mouse.y = y;
-
-      if (isDragging) {
-        const deltaX = event.clientX - previousMousePosition.x;
-        const deltaY = event.clientY - previousMousePosition.y;
-        dragVelocity.x = deltaX * 0.005;
-        dragVelocity.y = deltaY * 0.005;
-
-        globeGroup.rotation.y += dragVelocity.x;
-        globeGroup.rotation.x += dragVelocity.y;
-
-        previousMousePosition = { x: event.clientX, y: event.clientY };
-      } else {
-        targetRotationY = x * 0.28;
-        targetRotationX = -y * 0.22;
-      }
-
-      // Hover Detection over Satellites
-      raycaster.setFromCamera(mouse, camera);
-      const intersects = raycaster.intersectObjects(satelliteMeshes);
-      if (intersects.length > 0) {
-        const hit = intersects[0].object;
-        setHoveredTech(hit.userData);
-        currentMount.style.cursor = "pointer";
-      } else {
-        setHoveredTech(null);
-        currentMount.style.cursor = isDragging ? "grabbing" : "grab";
-      }
-    };
-
-    currentMount.addEventListener("mousedown", onMouseDown);
-    window.addEventListener("mouseup", onMouseUp);
-    window.addEventListener("mousemove", onMouseMove);
-
-    // Touch support for mobile devices
-    const onTouchStart = (e) => {
-      if (e.touches.length === 1) {
-        isDragging = true;
-        previousMousePosition = { x: e.touches[0].clientX, y: e.touches[0].clientY };
-      }
-    };
-    const onTouchMove = (e) => {
-      if (isDragging && e.touches.length === 1) {
-        const deltaX = e.touches[0].clientX - previousMousePosition.x;
-        const deltaY = e.touches[0].clientY - previousMousePosition.y;
-        globeGroup.rotation.y += deltaX * 0.006;
-        globeGroup.rotation.x += deltaY * 0.006;
-        previousMousePosition = { x: e.touches[0].clientX, y: e.touches[0].clientY };
-      }
-    };
-    const onTouchEnd = () => {
-      isDragging = false;
-    };
-
-    currentMount.addEventListener("touchstart", onTouchStart, { passive: true });
-    window.addEventListener("touchmove", onTouchMove, { passive: true });
-    window.addEventListener("touchend", onTouchEnd);
-
-    // ==========================================
-    // 7. 60 FPS DYNAMIC ANIMATION LOOP
-    // ==========================================
-    let animId;
-    const clock = new THREE.Clock();
-
-    const animate = () => {
-      animId = requestAnimationFrame(animate);
-      const elapsedTime = clock.getElapsedTime();
-
-      // Damped Parallax
-      if (!isDragging) {
-        mainGroup.rotation.y += (targetRotationY - mainGroup.rotation.y) * 0.05;
-        mainGroup.rotation.x += (targetRotationX - mainGroup.rotation.x) * 0.05;
-        globeGroup.rotation.y += 0.003; // Smooth continuous globe spin
-      }
-
-      // Smooth radar pulse wave animation
-      radarRings.forEach((ring, i) => {
-        const waveScale = 1.0 + ((elapsedTime * 1.5 + i * 0.3) % 1) * 2.2;
-        ring.scale.set(waveScale, waveScale, 1);
-        ring.material.opacity = Math.max(0, 0.8 - ((elapsedTime * 1.5 + i * 0.3) % 1));
-      });
-
-      // Advance photon data packets along arcs
-      photonPulses.forEach((item) => {
-        item.progress = (item.progress + 0.008) % 1;
-        const pt = item.curve.getPoint(item.progress);
-        item.photon.position.copy(pt);
-      });
-
-      // Animate Orbiting Tech Satellites
-      satelliteMeshes.forEach((sat, i) => {
-        const { baseAngle, orbitRadiusX, orbitRadiusZ, orbitTilt, speed, name } = sat.userData;
-        const angle = baseAngle + elapsedTime * speed;
-
-        const x = Math.cos(angle) * orbitRadiusX;
-        const z = Math.sin(angle) * orbitRadiusZ;
-        const y = Math.sin(angle) * Math.sin(orbitTilt) * 1.8 + Math.sin(elapsedTime * 1.2 + i) * 0.12;
-
-        sat.position.set(x, y, z);
-        sat.rotation.y += 0.012;
-        sat.rotation.x += 0.006;
-
-        const isHovered = hoveredTech && hoveredTech.name === name;
-        if (isHovered) {
-          sat.scale.lerp(new THREE.Vector3(1.25, 1.25, 1.25), 0.1);
-        } else {
-          sat.scale.lerp(new THREE.Vector3(1.0, 1.0, 1.0), 0.1);
-        }
-
-        // Dynamic laser conduit to nearest point on globe surface
-        if (satelliteConduits[i]) {
-          const globeSurfacePt = sat.position.clone().normalize().multiplyScalar(globeRadius * 1.04);
-          const posAttr = satelliteConduits[i].geometry.attributes.position;
-          posAttr.setXYZ(0, globeSurfacePt.x, globeSurfacePt.y, globeSurfacePt.z);
-          posAttr.setXYZ(1, sat.position.x, sat.position.y, sat.position.z);
-          posAttr.needsUpdate = true;
-          satelliteConduits[i].material.opacity = isHovered ? 0.95 : 0.35;
-        }
-      });
-
-      // Rotate cosmic background particles
-      particles.rotation.y = elapsedTime * 0.02;
-
-      renderer.render(scene, camera);
-    };
-
-    animate();
-
-    // 8. Resize Handler
-    const handleResize = () => {
-      if (!currentMount) return;
-      const newW = currentMount.clientWidth;
-      const newH = currentMount.clientHeight;
-      camera.aspect = newW / newH;
-      camera.updateProjectionMatrix();
-      renderer.setSize(newW, newH);
-    };
-
-    window.addEventListener("resize", handleResize);
-
-    return () => {
-      currentMount.removeEventListener("mousedown", onMouseDown);
-      window.removeEventListener("mouseup", onMouseUp);
-      window.removeEventListener("mousemove", onMouseMove);
-      currentMount.removeEventListener("touchstart", onTouchStart);
-      window.removeEventListener("touchmove", onTouchMove);
-      window.removeEventListener("touchend", onTouchEnd);
-      window.removeEventListener("resize", handleResize);
-      cancelAnimationFrame(animId);
-      if (currentMount && renderer.domElement) {
-        currentMount.removeChild(renderer.domElement);
-      }
-      renderer.dispose();
-    };
-  }, [hoveredTech]);
+  const [activeTab, setActiveTab] = useState("web");
 
   return (
     <section id="home" className="hero-section position-relative overflow-hidden" style={{ minHeight: "88vh" }}>
@@ -665,51 +152,251 @@ const Hero3D = ({ onGetStarted }) => {
             </div>
           </Col>
 
-          {/* Right Column: 3D Interactive Holographic Cyber Globe & Connected Cloud Network */}
+          {/* Right Column: High-Tech Studio Architecture & System Showcase */}
           <Col lg={6} className="position-relative">
-            <div
-              className="hero-canvas-container position-relative"
-              ref={mountRef}
-              style={{ height: "500px" }}
-            >
-              {/* Interactive 3D Node Hover Card */}
-              {hoveredTech && (
-                <div
-                  className="position-absolute bg-white px-3 py-2 rounded-pill shadow-lg border border-primary-subtle d-flex align-items-center gap-2"
-                  style={{
-                    top: "6%",
-                    left: "50%",
-                    transform: "translateX(-50%)",
-                    zIndex: 10,
-                    pointerEvents: "none"
-                  }}
-                >
-                  <span className="fs-5">{hoveredTech.symbol}</span>
-                  <div>
-                    <strong className="text-dark small d-block">{hoveredTech.name}</strong>
-                    <span className="text-muted" style={{ fontSize: "0.75rem" }}>
-                      {hoveredTech.subtitle}
-                    </span>
-                  </div>
-                  <span className="badge bg-primary text-white rounded-pill px-2 py-1 small ms-1">
-                    Cloud Satellite
-                  </span>
-                </div>
-              )}
-
-              {/* 3D Hint Badge */}
+            <div className="hero-showcase-wrapper position-relative">
+              {/* Outer Glow Halo */}
               <div
-                className="position-absolute bg-white bg-opacity-95 px-3 py-1 rounded-pill shadow-sm border border-light-subtle small text-muted d-flex align-items-center gap-2"
                 style={{
-                  bottom: "4%",
-                  left: "50%",
-                  transform: "translateX(-50%)",
-                  zIndex: 2,
+                  position: "absolute",
+                  inset: "-15px",
+                  background: "radial-gradient(circle, rgba(0, 162, 234, 0.22) 0%, rgba(37, 99, 235, 0.1) 50%, transparent 75%)",
+                  filter: "blur(20px)",
+                  zIndex: 0,
+                  borderRadius: "28px",
                   pointerEvents: "none"
                 }}
+              />
+
+              {/* High-Tech Terminal / Architecture Window */}
+              <div
+                className="position-relative shadow-2xl rounded-4 overflow-hidden border border-secondary border-opacity-25"
+                style={{
+                  background: "linear-gradient(160deg, #0b1329 0%, #060b18 100%)",
+                  boxShadow: "0 25px 60px -15px rgba(0, 162, 234, 0.25), 0 0 1px 1px rgba(255,255,255,0.1)",
+                  zIndex: 1
+                }}
               >
-                <Sparkles size={14} className="text-primary" />
-                <span>Drag to spin 3D Cyber Globe • Hover satellites to inspect stack</span>
+                {/* Window Header */}
+                <div
+                  className="d-flex align-items-center justify-content-between px-3 py-2 border-bottom border-secondary border-opacity-25"
+                  style={{ background: "rgba(15, 23, 42, 0.85)", backdropFilter: "blur(8px)" }}
+                >
+                  <div className="d-flex align-items-center gap-2">
+                    <span className="rounded-circle" style={{ width: "11px", height: "11px", background: "#ef4444" }}></span>
+                    <span className="rounded-circle" style={{ width: "11px", height: "11px", background: "#eab308" }}></span>
+                    <span className="rounded-circle" style={{ width: "11px", height: "11px", background: "#22c55e" }}></span>
+                    <span className="ms-2 text-secondary font-monospace" style={{ fontSize: "11px" }}>
+                      krsh-cloud-v2.production
+                    </span>
+                  </div>
+
+                  <div className="d-flex align-items-center gap-2">
+                    <span className="badge bg-success bg-opacity-25 text-success border border-success border-opacity-25 rounded-pill px-2 py-1" style={{ fontSize: "10px" }}>
+                      ● 99.99% UPTIME
+                    </span>
+                  </div>
+                </div>
+
+                {/* Window Body */}
+                <div className="p-3 p-md-4 text-white">
+                  {/* Brand & Studio Architecture Banner */}
+                  <div className="d-flex align-items-center justify-content-between mb-3 pb-3 border-bottom border-secondary border-opacity-25 flex-wrap gap-2">
+                    <div className="d-flex align-items-center gap-3">
+                      <img
+                        src="/logo.png"
+                        alt="Krsh Innovations"
+                        style={{
+                          width: "48px",
+                          height: "48px",
+                          objectFit: "cover",
+                          borderRadius: "12px",
+                          background: "#ffffff",
+                          padding: "2px",
+                          boxShadow: "0 4px 14px rgba(0, 162, 234, 0.4)"
+                        }}
+                      />
+                      <div>
+                        <div className="fw-bold text-white fs-6 d-flex align-items-center gap-2">
+                          <span>Krsh.<span style={{ color: "#00a2ea" }}>Innovations</span></span>
+                          <span className="badge bg-primary bg-opacity-25 text-primary border border-primary border-opacity-25 rounded-pill px-2 py-0" style={{ fontSize: "9px" }}>
+                            VERIFIED STUDIO
+                          </span>
+                        </div>
+                        <div className="text-secondary" style={{ fontSize: "11px" }}>
+                          Full-Stack Web • Mobile Apps • Custom Cloud Architecture
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="text-end d-none d-sm-block">
+                      <div className="text-info font-monospace small fw-bold">18ms Latency</div>
+                      <div className="text-secondary" style={{ fontSize: "10px" }}>Direct Founder Access</div>
+                    </div>
+                  </div>
+
+                  {/* Interactive Architecture Navigation Tabs */}
+                  <div className="d-flex gap-2 mb-3">
+                    <button
+                      type="button"
+                      onClick={() => setActiveTab("web")}
+                      className={`btn btn-sm rounded-pill px-3 py-1 font-monospace transition-all ${
+                        activeTab === "web"
+                          ? "btn-primary shadow-sm"
+                          : "btn-outline-secondary text-secondary border-secondary border-opacity-50"
+                      }`}
+                      style={{ fontSize: "12px" }}
+                    >
+                      <Code2 size={13} className="me-1" /> Web Core
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setActiveTab("mobile")}
+                      className={`btn btn-sm rounded-pill px-3 py-1 font-monospace transition-all ${
+                        activeTab === "mobile"
+                          ? "btn-primary shadow-sm"
+                          : "btn-outline-secondary text-secondary border-secondary border-opacity-50"
+                      }`}
+                      style={{ fontSize: "12px" }}
+                    >
+                      <Smartphone size={13} className="me-1" /> Mobile Engine
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setActiveTab("backend")}
+                      className={`btn btn-sm rounded-pill px-3 py-1 font-monospace transition-all ${
+                        activeTab === "backend"
+                          ? "btn-primary shadow-sm"
+                          : "btn-outline-secondary text-secondary border-secondary border-opacity-50"
+                      }`}
+                      style={{ fontSize: "12px" }}
+                    >
+                      <Server size={13} className="me-1" /> Backend & DB
+                    </button>
+                  </div>
+
+                  {/* Architecture Tab Content Panel */}
+                  <div
+                    className="p-3 rounded-3 border border-secondary border-opacity-25 mb-3"
+                    style={{ background: "rgba(15, 23, 42, 0.65)" }}
+                  >
+                    {activeTab === "web" && (
+                      <div>
+                        <div className="d-flex justify-content-between align-items-center mb-2">
+                          <span className="text-info fw-semibold small d-flex align-items-center gap-1">
+                            <Zap size={14} /> React 18 & Vite Ecosystem
+                          </span>
+                          <span className="badge bg-success bg-opacity-25 text-success" style={{ fontSize: "10px" }}>
+                            Ultra-Fast HMR
+                          </span>
+                        </div>
+                        <p className="text-secondary small mb-2" style={{ fontSize: "12px", lineHeight: "1.6" }}>
+                          Single Page Applications, Enterprise SaaS dashboards, and responsive frontends engineered with component modularity and lightning-fast client-side state.
+                        </p>
+                        <div className="d-flex flex-wrap gap-2">
+                          <span className="badge bg-dark border border-secondary text-light px-2 py-1" style={{ fontSize: "11px" }}>React 18</span>
+                          <span className="badge bg-dark border border-secondary text-light px-2 py-1" style={{ fontSize: "11px" }}>Bootstrap 5</span>
+                          <span className="badge bg-dark border border-secondary text-light px-2 py-1" style={{ fontSize: "11px" }}>Tailwind CSS</span>
+                          <span className="badge bg-dark border border-secondary text-light px-2 py-1" style={{ fontSize: "11px" }}>REST / GraphQL</span>
+                        </div>
+                      </div>
+                    )}
+
+                    {activeTab === "mobile" && (
+                      <div>
+                        <div className="d-flex justify-content-between align-items-center mb-2">
+                          <span className="text-info fw-semibold small d-flex align-items-center gap-1">
+                            <Smartphone size={14} /> Flutter iOS & Android Engine
+                          </span>
+                          <span className="badge bg-info bg-opacity-25 text-info" style={{ fontSize: "10px" }}>
+                            60 FPS Native
+                          </span>
+                        </div>
+                        <p className="text-secondary small mb-2" style={{ fontSize: "12px", lineHeight: "1.6" }}>
+                          High-performance cross-platform mobile apps built from a single codebase. Native hardware access, smooth gesture navigation, and real-time offline synchronization.
+                        </p>
+                        <div className="d-flex flex-wrap gap-2">
+                          <span className="badge bg-dark border border-secondary text-light px-2 py-1" style={{ fontSize: "11px" }}>Flutter 3.x</span>
+                          <span className="badge bg-dark border border-secondary text-light px-2 py-1" style={{ fontSize: "11px" }}>Dart</span>
+                          <span className="badge bg-dark border border-secondary text-light px-2 py-1" style={{ fontSize: "11px" }}>iOS & Android</span>
+                          <span className="badge bg-dark border border-secondary text-light px-2 py-1" style={{ fontSize: "11px" }}>Firebase / Push</span>
+                        </div>
+                      </div>
+                    )}
+
+                    {activeTab === "backend" && (
+                      <div>
+                        <div className="d-flex justify-content-between align-items-center mb-2">
+                          <span className="text-info fw-semibold small d-flex align-items-center gap-1">
+                            <Server size={14} /> Node.js, PHP/Laravel & Databases
+                          </span>
+                          <span className="badge bg-primary bg-opacity-25 text-primary" style={{ fontSize: "10px" }}>
+                            ACID Compliant
+                          </span>
+                        </div>
+                        <p className="text-secondary small mb-2" style={{ fontSize: "12px", lineHeight: "1.6" }}>
+                          Hardened backend architectures with Express & Laravel, secure REST APIs, role-based JWT auth, and optimized MySQL / MongoDB indexing for zero latency.
+                        </p>
+                        <div className="d-flex flex-wrap gap-2">
+                          <span className="badge bg-dark border border-secondary text-light px-2 py-1" style={{ fontSize: "11px" }}>Node.js & Express</span>
+                          <span className="badge bg-dark border border-secondary text-light px-2 py-1" style={{ fontSize: "11px" }}>PHP 8 & Laravel</span>
+                          <span className="badge bg-dark border border-secondary text-light px-2 py-1" style={{ fontSize: "11px" }}>MySQL Relational</span>
+                          <span className="badge bg-dark border border-secondary text-light px-2 py-1" style={{ fontSize: "11px" }}>Python AI Microservices</span>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* System Architecture Metrics */}
+                  <div className="row g-2 text-center font-monospace">
+                    <div className="col-4">
+                      <div className="p-2 rounded-2 border border-secondary border-opacity-25" style={{ background: "rgba(15, 23, 42, 0.4)" }}>
+                        <div className="text-info fw-bold" style={{ fontSize: "13px" }}>100%</div>
+                        <div className="text-secondary" style={{ fontSize: "10px" }}>IP Handover</div>
+                      </div>
+                    </div>
+                    <div className="col-4">
+                      <div className="p-2 rounded-2 border border-secondary border-opacity-25" style={{ background: "rgba(15, 23, 42, 0.4)" }}>
+                        <div className="text-success fw-bold" style={{ fontSize: "13px" }}>Weekly</div>
+                        <div className="text-secondary" style={{ fontSize: "10px" }}>Sprint Demos</div>
+                      </div>
+                    </div>
+                    <div className="col-4">
+                      <div className="p-2 rounded-2 border border-secondary border-opacity-25" style={{ background: "rgba(15, 23, 42, 0.4)" }}>
+                        <div className="text-primary fw-bold" style={{ fontSize: "13px" }}>Zero</div>
+                        <div className="text-secondary" style={{ fontSize: "10px" }}>Vendor Lock-in</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Floating Tech Pill Top-Right */}
+              <div
+                className="position-absolute d-none d-sm-flex align-items-center gap-2 bg-white px-3 py-2 rounded-pill shadow-lg border border-primary-subtle"
+                style={{
+                  top: "-14px",
+                  right: "20px",
+                  zIndex: 3
+                }}
+              >
+                <span className="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center" style={{ width: "22px", height: "22px", fontSize: "11px" }}>
+                  ⚡
+                </span>
+                <span className="small fw-bold text-dark">Production Ready MVP</span>
+              </div>
+
+              {/* Floating Tech Pill Bottom-Left */}
+              <div
+                className="position-absolute d-none d-sm-flex align-items-center gap-2 bg-white px-3 py-2 rounded-pill shadow-lg border border-success-subtle"
+                style={{
+                  bottom: "-14px",
+                  left: "20px",
+                  zIndex: 3
+                }}
+              >
+                <CheckCircle2 size={16} className="text-success" />
+                <span className="small fw-bold text-dark">Enterprise Standards</span>
               </div>
             </div>
           </Col>

@@ -316,13 +316,23 @@ const AdminDashboard = ({ onBackToSite, dbStatus }) => {
         }}
       >
         <div>
-          <div className="d-flex align-items-center gap-2 pb-3 mb-4 border-bottom border-secondary">
-            <div className="brand-badge" style={{ background: "#00a2ea" }}>
-              <Layers size={20} className="text-white" />
-            </div>
+          <div className="d-flex align-items-center gap-3 pb-3 mb-4 border-bottom border-secondary border-opacity-25">
+            <img
+              src="/logo.png"
+              alt="Krsh Innovations"
+              style={{
+                height: "44px",
+                width: "44px",
+                objectFit: "contain",
+                borderRadius: "10px",
+                background: "#ffffff",
+                padding: "2px",
+                boxShadow: "0 2px 8px rgba(0,0,0,0.3)"
+              }}
+            />
             <div>
-              <div className="fw-bold" style={{ fontSize: "1.1rem", letterSpacing: "-0.5px" }}>
-                Krsh.Innovations
+              <div className="fw-bold text-white" style={{ fontSize: "1.05rem", letterSpacing: "-0.4px" }}>
+                Krsh.<span style={{ color: "#00a2ea" }}>Innovations</span>
               </div>
               <div className="small text-info fw-semibold" style={{ fontSize: "0.75rem" }}>
                 Super Admin Panel
@@ -535,27 +545,27 @@ const AdminDashboard = ({ onBackToSite, dbStatus }) => {
                   <div className="text-center py-4 text-muted small">No contact inquiries yet.</div>
                 ) : (
                   <div className="table-responsive">
-                    <Table hover className="align-middle mb-0">
+                    <Table hover className="align-middle mb-0" style={{ minWidth: "750px" }}>
                       <thead className="table-light small text-uppercase">
                         <tr>
-                          <th>ID</th>
-                          <th>Client Name</th>
-                          <th>Email</th>
-                          <th>Service</th>
-                          <th>Budget</th>
-                          <th>Status</th>
-                          <th>Date</th>
+                          <th className="align-middle text-center" style={{ width: "60px" }}>ID</th>
+                          <th className="align-middle">Client Name</th>
+                          <th className="align-middle">Email</th>
+                          <th className="align-middle">Service</th>
+                          <th className="align-middle text-nowrap">Budget</th>
+                          <th className="align-middle text-center">Status</th>
+                          <th className="align-middle text-nowrap">Date</th>
                         </tr>
                       </thead>
                       <tbody className="small">
                         {inquiries.slice(0, 5).map((inq) => (
                           <tr key={inq.id}>
-                            <td><strong>#{inq.id}</strong></td>
-                            <td className="fw-bold">{inq.name}</td>
-                            <td><a href={`mailto:${inq.email}`} className="text-primary">{inq.email}</a></td>
-                            <td><Badge bg="light" text="dark" className="border">{inq.service}</Badge></td>
-                            <td>{inq.budget || "Flexible"}</td>
-                            <td>
+                            <td className="align-middle text-center"><strong className="text-secondary">#{inq.id}</strong></td>
+                            <td className="align-middle fw-bold text-dark">{inq.name}</td>
+                            <td className="align-middle"><a href={`mailto:${inq.email}`} className="text-primary text-decoration-none">{inq.email}</a></td>
+                            <td className="align-middle"><Badge bg="light" text="dark" className="border px-2 py-1">{inq.service}</Badge></td>
+                            <td className="align-middle text-nowrap fw-bold text-dark">{inq.budget || "Flexible"}</td>
+                            <td className="align-middle text-center">
                               <Badge
                                 bg={
                                   inq.status === "completed"
@@ -566,12 +576,12 @@ const AdminDashboard = ({ onBackToSite, dbStatus }) => {
                                     ? "warning"
                                     : "danger"
                                 }
-                                className="rounded-pill"
+                                className="rounded-pill px-3 py-1 text-capitalize"
                               >
                                 {inq.status || "new"}
                               </Badge>
                             </td>
-                            <td className="text-muted">{new Date(inq.created_at || Date.now()).toLocaleDateString()}</td>
+                            <td className="align-middle text-muted text-nowrap">{new Date(inq.created_at || Date.now()).toLocaleDateString()}</td>
                           </tr>
                         ))}
                       </tbody>
@@ -612,41 +622,41 @@ const AdminDashboard = ({ onBackToSite, dbStatus }) => {
                 <div className="text-center py-5 text-muted">No inquiries found matching filter.</div>
               ) : (
                 <div className="table-responsive">
-                  <Table hover className="align-middle">
+                  <Table hover className="align-middle mb-0" style={{ minWidth: "960px" }}>
                     <thead className="table-light small text-uppercase">
                       <tr>
-                        <th>ID</th>
-                        <th>Client Details</th>
-                        <th>Service</th>
-                        <th>Budget</th>
-                        <th>Message / Scope</th>
-                        <th>Status Control</th>
-                        <th>Date</th>
-                        <th>Action</th>
+                        <th className="align-middle text-center" style={{ width: "60px" }}>ID</th>
+                        <th className="align-middle" style={{ minWidth: "200px" }}>Client Details</th>
+                        <th className="align-middle" style={{ minWidth: "150px" }}>Service</th>
+                        <th className="align-middle text-nowrap" style={{ minWidth: "140px" }}>Budget</th>
+                        <th className="align-middle" style={{ minWidth: "220px" }}>Message / Scope</th>
+                        <th className="align-middle text-center" style={{ minWidth: "150px" }}>Status Control</th>
+                        <th className="align-middle text-nowrap" style={{ minWidth: "110px" }}>Date</th>
+                        <th className="align-middle text-center" style={{ width: "70px" }}>Action</th>
                       </tr>
                     </thead>
                     <tbody className="small">
                       {filteredInquiries.map((inq) => (
                         <tr key={inq.id}>
-                          <td><strong>#{inq.id}</strong></td>
-                          <td>
-                            <div className="fw-bold">{inq.name}</div>
-                            <a href={`mailto:${inq.email}`} className="text-primary">{inq.email}</a>
+                          <td className="align-middle text-center"><strong className="text-secondary">#{inq.id}</strong></td>
+                          <td className="align-middle">
+                            <div className="fw-bold text-dark">{inq.name}</div>
+                            <a href={`mailto:${inq.email}`} className="text-primary text-decoration-none small d-block">{inq.email}</a>
                             {inq.phone && <div className="text-muted small">{inq.phone}</div>}
                           </td>
-                          <td><Badge bg="info-subtle" text="info-emphasis" className="border">{inq.service}</Badge></td>
-                          <td><strong>{inq.budget || "Flexible"}</strong></td>
-                          <td style={{ maxWidth: "250px" }}>
+                          <td className="align-middle"><Badge bg="info-subtle" text="info-emphasis" className="border px-2 py-1">{inq.service}</Badge></td>
+                          <td className="align-middle text-nowrap fw-bold text-dark">{inq.budget || "Flexible"}</td>
+                          <td className="align-middle" style={{ maxWidth: "260px" }}>
                             <div className="text-secondary small text-truncate" title={inq.message}>
-                              {inq.message}
+                              {inq.message || "—"}
                             </div>
                           </td>
-                          <td>
+                          <td className="align-middle text-center">
                             <Form.Select
                               size="sm"
                               value={inq.status || "new"}
                               onChange={(e) => handleUpdateStatus(inq.id, e.target.value)}
-                              className={`rounded-pill fw-semibold ${
+                              className={`rounded-pill fw-semibold mx-auto ${
                                 inq.status === "completed"
                                   ? "bg-success text-white"
                                   : inq.status === "contacted"
@@ -663,8 +673,8 @@ const AdminDashboard = ({ onBackToSite, dbStatus }) => {
                               <option value="completed">🟢 Completed</option>
                             </Form.Select>
                           </td>
-                          <td className="text-muted">{new Date(inq.created_at || Date.now()).toLocaleDateString()}</td>
-                          <td>
+                          <td className="align-middle text-muted text-nowrap">{new Date(inq.created_at || Date.now()).toLocaleDateString()}</td>
+                          <td className="align-middle text-center">
                             <Button
                               variant="outline-danger"
                               size="sm"
@@ -778,34 +788,34 @@ const AdminDashboard = ({ onBackToSite, dbStatus }) => {
                 <div className="text-center py-5 text-muted">No quote requests yet.</div>
               ) : (
                 <div className="table-responsive">
-                  <Table hover className="align-middle">
+                  <Table hover className="align-middle mb-0" style={{ minWidth: "880px" }}>
                     <thead className="table-light small text-uppercase">
                       <tr>
-                        <th>ID</th>
-                        <th>Client</th>
-                        <th>Project Type</th>
-                        <th>Tech Stack</th>
-                        <th>Features</th>
-                        <th>Estimate</th>
-                        <th>Date</th>
+                        <th className="align-middle text-center" style={{ width: "60px" }}>ID</th>
+                        <th className="align-middle" style={{ minWidth: "180px" }}>Client</th>
+                        <th className="align-middle" style={{ minWidth: "160px" }}>Project Type</th>
+                        <th className="align-middle" style={{ minWidth: "160px" }}>Tech Stack</th>
+                        <th className="align-middle" style={{ minWidth: "160px" }}>Features</th>
+                        <th className="align-middle text-nowrap" style={{ minWidth: "140px" }}>Estimate</th>
+                        <th className="align-middle text-nowrap" style={{ minWidth: "110px" }}>Date</th>
                       </tr>
                     </thead>
                     <tbody className="small">
                       {quotes.map((q) => (
                         <tr key={q.id}>
-                          <td><strong>#{q.id}</strong></td>
-                          <td>
-                            <div className="fw-bold">{q.name}</div>
-                            <a href={`mailto:${q.email}`} className="text-primary">{q.email}</a>
+                          <td className="align-middle text-center"><strong className="text-secondary">#{q.id}</strong></td>
+                          <td className="align-middle">
+                            <div className="fw-bold text-dark">{q.name}</div>
+                            <a href={`mailto:${q.email}`} className="text-primary text-decoration-none small">{q.email}</a>
                           </td>
-                          <td><Badge bg="primary-subtle" text="primary">{q.project_type}</Badge></td>
-                          <td><span className="small text-secondary">{q.tech_stack}</span></td>
-                          <td><span className="small text-secondary">{q.features}</span></td>
-                          <td>
+                          <td className="align-middle"><Badge bg="primary-subtle" text="primary" className="border px-2 py-1">{q.project_type}</Badge></td>
+                          <td className="align-middle"><span className="small text-secondary">{q.tech_stack}</span></td>
+                          <td className="align-middle"><span className="small text-secondary">{q.features}</span></td>
+                          <td className="align-middle text-nowrap">
                             <div className="fw-bold text-success">{q.estimated_cost}</div>
                             <div className="small text-muted">{q.estimated_timeline}</div>
                           </td>
-                          <td className="text-muted">{new Date(q.created_at || Date.now()).toLocaleDateString()}</td>
+                          <td className="align-middle text-muted text-nowrap">{new Date(q.created_at || Date.now()).toLocaleDateString()}</td>
                         </tr>
                       ))}
                     </tbody>

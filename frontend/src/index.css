@@ -11,6 +11,7 @@
   --krsh-text-main: #1e293b;
   --krsh-text-muted: #64748b;
   --krsh-blue: #00a2ea;
+  --krsh-gradient-blue: linear-gradient(135deg, #00a2ea 0%, #2563eb 100%);
 }
 
 * {
@@ -840,5 +841,32 @@ h1, h2, h3, h4, h5, h6 {
   border-color: #0284c7;
   transform: translateY(-1px);
 }
+
+/* Responsive enhancements for Why Choose Us section & mobile frame */
+@media (max-width: 991px) {
+  #why-us {
+    padding-top: 3rem !important;
+    padding-bottom: 3rem !important;
+    margin-top: 2rem !important;
+    margin-bottom: 2rem !important;
+  }
+  .phone-mockup-frame {
+    height: 490px;
+    max-width: 290px;
+    margin: 2.5rem auto;
+  }
+}
+
+@media (max-width: 576px) {
+  .phone-mockup-frame {
+    height: 450px;
+    max-width: 270px;
+    margin: 2rem auto;
+  }
+  .feature-item {
+    margin-bottom: 1.8rem;
+  }
+}
+
 
 

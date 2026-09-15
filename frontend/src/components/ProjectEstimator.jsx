@@ -248,22 +248,22 @@ const ProjectEstimator = ({ preselectedService }) => {
                 </div>
 
                 <div className="mb-4">
-                  <div className="text-muted small text-uppercase tracking-wider mb-1">
+                  <div className="text-white fw-bold small text-uppercase tracking-wider mb-1" style={{ letterSpacing: "1px" }}>
                     Estimated Investment Range
                   </div>
                   <div className="display-6 fw-bold text-info">{estimatedPriceRange}</div>
-                  <div className="small text-secondary mt-1">Includes architecture, QA & deployment</div>
+                  <div className="small text-light text-opacity-75 mt-1">Includes architecture, QA & deployment</div>
                 </div>
 
                 <div className="mb-4 pb-3 border-bottom border-secondary">
-                  <div className="text-muted small text-uppercase tracking-wider mb-1">
+                  <div className="text-white fw-bold small text-uppercase tracking-wider mb-1" style={{ letterSpacing: "1px" }}>
                     Delivery Roadmap
                   </div>
                   <div className="fs-4 fw-bold text-white d-flex align-items-center gap-2">
                     <Clock size={20} className="text-primary" />
                     <span>{estimatedTimeline}</span>
                   </div>
-                  <div className="small text-secondary mt-1">Agile sprints with weekly demos</div>
+                  <div className="small text-light text-opacity-75 mt-1">Agile sprints with weekly demos</div>
                 </div>
 
                 {submitResult && (

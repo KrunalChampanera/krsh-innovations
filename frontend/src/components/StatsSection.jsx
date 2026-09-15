@@ -70,9 +70,10 @@ const StatsSection = () => {
             We Are Ready To Build{" "}
             <span
               style={{
-                background: "var(--krsh-gradient-blue)",
+                background: "linear-gradient(135deg, #00a2ea 0%, #2563eb 100%)",
                 WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent"
+                WebkitTextFillColor: "transparent",
+                color: "#00a2ea"
               }}
             >
               What You Want
