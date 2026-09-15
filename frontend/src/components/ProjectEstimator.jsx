@@ -302,16 +302,15 @@ const ProjectEstimator = ({ preselectedService }) => {
                     />
                   </div>
 
-                  <Button
+                  <button
                     type="submit"
-                    variant="primary"
                     disabled={submitting}
-                    className="w-100 py-3 rounded-pill fw-bold border-0 shadow d-flex align-items-center justify-content-center gap-2"
-                    style={{ background: "var(--krsh-gradient-blue)" }}
+                    className="btn-krsh-primary w-100"
+                    style={{ height: "46px", fontSize: "0.94rem" }}
                   >
-                    <Send size={18} />
+                    <Send size={17} />
                     <span>{submitting ? "Submitting to MySQL..." : "Send Estimate to Krsh.Innovations"}</span>
-                  </Button>
+                  </button>
                 </Form>
               </div>
 

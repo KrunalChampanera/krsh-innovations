@@ -269,16 +269,15 @@ const ContactSection = () => {
                   </Col>
 
                   <Col md={12} className="mt-4">
-                    <Button
+                    <button
                       type="submit"
-                      variant="primary"
                       disabled={status.loading}
-                      className="w-100 py-3 rounded-pill fw-bold border-0 shadow d-flex align-items-center justify-content-center gap-2"
-                      style={{ background: "var(--krsh-gradient-blue)" }}
+                      className="btn-krsh-primary w-100"
+                      style={{ height: "46px", fontSize: "0.94rem" }}
                     >
-                      <Send size={18} />
+                      <Send size={17} />
                       <span>{status.loading ? "Submitting Inquiry..." : "Submit Inquiry to Krsh.Innovations"}</span>
-                    </Button>
+                    </button>
                   </Col>
                 </Row>
               </Form>

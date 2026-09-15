@@ -81,7 +81,7 @@ h1, h2, h3, h4, h5, h6 {
   white-space: nowrap !important;
   color: #1e293b !important;
   font-weight: 500 !important;
-  font-size: 0.95rem !important;
+  font-size: 0.92rem !important;
   padding: 0.45rem 0.55rem !important;
   transition: color 0.2s ease;
   display: inline-block !important;
@@ -91,7 +91,7 @@ h1, h2, h3, h4, h5, h6 {
   .nav-item-link,
   .nav-item-link-dropdown .dropdown-toggle {
     padding: 0.5rem 0.85rem !important;
-    font-size: 1rem !important;
+    font-size: 0.96rem !important;
   }
 }
 
@@ -100,19 +100,182 @@ h1, h2, h3, h4, h5, h6 {
   color: #00a2ea !important;
 }
 
-.btn-get-started {
-  white-space: nowrap !important;
-  background-color: #00a2ea !important;
-  padding: 8px 22px !important;
-  border-radius: 6px !important;
-  font-size: 0.95rem !important;
-  transition: all 0.2s ease;
+/* ========================================================
+   SERVICES DROPDOWN MENU - SLEEK MODERN FONTS & HOVER
+   ======================================================== */
+.nav-item-link-dropdown {
+  position: relative;
 }
 
+/* Smooth Desktop Hover Trigger */
+@media (min-width: 992px) {
+  .nav-item-link-dropdown:hover > .dropdown-menu {
+    display: block !important;
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+}
+
+.nav-item-link-dropdown .dropdown-menu {
+  min-width: 320px !important;
+  max-width: 360px !important;
+  padding: 8px !important;
+  margin-top: 8px !important;
+  border: 1px solid rgba(226, 232, 240, 0.95) !important;
+  border-radius: 14px !important;
+  background: #ffffff !important;
+  box-shadow: 0 20px 40px -10px rgba(15, 23, 42, 0.14), 0 0 1px rgba(0, 0, 0, 0.08) !important;
+  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+  display: none;
+}
+
+/* Show class for mobile or click fallback */
+.nav-item-link-dropdown .dropdown-menu.show {
+  display: block !important;
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.dropdown-service-item {
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+  padding: 8px 12px !important;
+  border-radius: 8px !important;
+  transition: all 0.2s ease !important;
+  text-decoration: none !important;
+  white-space: normal !important;
+}
+
+.dropdown-service-item:hover,
+.dropdown-service-item:focus {
+  background: #f0f9ff !important;
+  transform: translateX(4px);
+}
+
+.dropdown-service-item:hover .dropdown-service-title {
+  color: #00a2ea !important;
+}
+
+.dropdown-service-icon {
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.dropdown-service-title {
+  font-size: 0.86rem !important;
+  font-weight: 600 !important;
+  color: #0f172a !important;
+  line-height: 1.25 !important;
+  margin-bottom: 2px !important;
+  transition: color 0.2s ease;
+}
+
+.dropdown-service-desc {
+  font-size: 0.74rem !important;
+  color: #64748b !important;
+  line-height: 1.25 !important;
+  font-weight: 400 !important;
+}
+
+/* ========================================================
+   STANDARDIZED MEDIUM BUTTONS (CONSISTENT WIDTH & HEIGHT)
+   ======================================================== */
+.btn-krsh-primary {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  min-width: 162px !important;
+  height: 44px !important;
+  padding: 0 22px !important;
+  font-size: 0.92rem !important;
+  font-weight: 600 !important;
+  color: #ffffff !important;
+  background: #00a2ea !important;
+  border: 1px solid #00a2ea !important;
+  border-radius: 8px !important;
+  letter-spacing: 0.2px !important;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  box-shadow: 0 2px 8px rgba(0, 162, 234, 0.25) !important;
+  text-decoration: none !important;
+  cursor: pointer !important;
+  white-space: nowrap !important;
+}
+
+.btn-krsh-primary:hover {
+  background: #008ece !important;
+  border-color: #008ece !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 6px 18px rgba(0, 162, 234, 0.35) !important;
+  color: #ffffff !important;
+}
+
+.btn-krsh-secondary {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  min-width: 162px !important;
+  height: 44px !important;
+  padding: 0 22px !important;
+  font-size: 0.92rem !important;
+  font-weight: 600 !important;
+  color: #334155 !important;
+  background: #ffffff !important;
+  border: 1.5px solid #cbd5e1 !important;
+  border-radius: 8px !important;
+  letter-spacing: 0.2px !important;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  text-decoration: none !important;
+  cursor: pointer !important;
+  white-space: nowrap !important;
+}
+
+.btn-krsh-secondary:hover {
+  background: #f8fafc !important;
+  border-color: #00a2ea !important;
+  color: #00a2ea !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06) !important;
+}
+
+/* Navbar specific medium button */
+.btn-nav-action,
+.btn-get-started {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 6px !important;
+  min-width: 135px !important;
+  height: 38px !important;
+  padding: 0 18px !important;
+  font-size: 0.88rem !important;
+  font-weight: 600 !important;
+  color: #ffffff !important;
+  background: #00a2ea !important;
+  border: none !important;
+  border-radius: 8px !important;
+  transition: all 0.2s ease !important;
+  box-shadow: 0 2px 8px rgba(0, 162, 234, 0.25) !important;
+  text-decoration: none !important;
+  white-space: nowrap !important;
+}
+
+.btn-nav-action:hover,
 .btn-get-started:hover {
-  background-color: #0088cc !important;
-  transform: translateY(-1px);
+  background: #0088cc !important;
+  transform: translateY(-1px) !important;
   box-shadow: 0 4px 12px rgba(0, 162, 234, 0.35) !important;
+  color: #ffffff !important;
 }
 
 /* Section Title Stylings matching Screenshot 2 & 4 */
@@ -384,10 +547,196 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Hover Lift for Portfolio Cards */
 .hover-lift {
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .hover-lift:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 16px 30px rgba(0, 0, 0, 0.08) !important;
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(0, 162, 234, 0.16) !important;
 }
+
+/* ========================================================
+   HERO TYPOGRAPHY & BUTTON SPACING
+   ======================================================== */
+.hero-headline {
+  font-size: clamp(2.1rem, 3.8vw, 3.15rem);
+  font-weight: 800;
+  line-height: 1.18;
+  letter-spacing: -1.2px;
+}
+
+.hero-subtitle {
+  font-size: 1.05rem;
+  line-height: 1.65;
+  color: #64748b;
+  max-width: 540px;
+}
+
+/* ========================================================
+   CRAZY PROJECT WEBSITE SHOWCASE (AWWWARDS-TIER SPOTLIGHT)
+   ======================================================== */
+.project-spotlight-box {
+  background: linear-gradient(135deg, #0b1329 0%, #0f1e36 100%);
+  border: 1px solid rgba(56, 189, 248, 0.2);
+  border-radius: 24px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 25px 60px -15px rgba(0, 162, 234, 0.25);
+  margin-bottom: 3.5rem;
+}
+
+.project-spotlight-box::before {
+  content: "";
+  position: absolute;
+  top: -120px;
+  right: -100px;
+  width: 380px;
+  height: 380px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(0, 162, 234, 0.3) 0%, rgba(0, 0, 0, 0) 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.project-spotlight-box::after {
+  content: "";
+  position: absolute;
+  bottom: -80px;
+  left: -80px;
+  width: 320px;
+  height: 320px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(99, 102, 241, 0.25) 0%, rgba(0, 0, 0, 0) 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Device Preview Frames */
+.showcase-laptop-mockup {
+  background: #1e293b;
+  border-radius: 14px 14px 0 0;
+  border: 8px solid #334155;
+  border-bottom: none;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+  position: relative;
+  overflow: hidden;
+  max-width: 580px;
+  margin: 0 auto;
+}
+
+.showcase-laptop-screen {
+  position: relative;
+  overflow: hidden;
+  height: 310px;
+  background: #090d16;
+}
+
+.showcase-laptop-screen img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.showcase-laptop-base {
+  height: 14px;
+  background: #475569;
+  border-radius: 0 0 16px 16px;
+  position: relative;
+  max-width: 640px;
+  margin: 0 auto;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+}
+
+.showcase-laptop-base::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 4px;
+  background: #1e293b;
+  border-radius: 0 0 4px 4px;
+}
+
+/* Metric Tag Pills */
+.spotlight-metric-chip {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 12px;
+  padding: 10px 16px;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: all 0.25s ease;
+}
+
+.spotlight-metric-chip:hover {
+  background: rgba(255, 255, 255, 0.14);
+  border-color: rgba(56, 189, 248, 0.5);
+  transform: translateY(-2px);
+}
+
+/* Project Cards in Gallery */
+.project-card-v2 {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  overflow: hidden;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 18px rgba(15, 23, 42, 0.04);
+}
+
+.project-card-v2:hover {
+  transform: translateY(-7px);
+  border-color: rgba(0, 162, 234, 0.4);
+  box-shadow: 0 20px 40px rgba(0, 162, 234, 0.16);
+}
+
+.project-card-v2:hover .project-card-img {
+  transform: scale(1.06);
+}
+
+.project-card-thumb-wrap {
+  position: relative;
+  height: 220px;
+  overflow: hidden;
+  background: #0f172a;
+}
+
+.project-card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.project-badge-glass {
+  background: rgba(15, 23, 42, 0.8) !important;
+  backdrop-filter: blur(8px);
+  color: #ffffff !important;
+  font-size: 0.74rem !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.3px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.project-tech-badge {
+  background: #f1f5f9;
+  color: #475569;
+  font-size: 0.76rem;
+  font-weight: 500;
+  padding: 4px 10px;
+  border-radius: 6px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+

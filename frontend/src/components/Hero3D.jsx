@@ -422,14 +422,11 @@ const Hero3D = ({ onGetStarted }) => {
               </span>
             </div>
 
-            <h1
-              className="display-4 fw-bold text-dark mb-3"
-              style={{ lineHeight: 1.15, letterSpacing: "-1.5px" }}
-            >
+            <h1 className="hero-headline text-dark mb-3">
               White Label{" "}
               <span
                 style={{
-                  background: "linear-gradient(135deg, #0284c7 0%, #2563eb 100%)",
+                  background: "linear-gradient(135deg, #00a2ea 0%, #2563eb 100%)",
                   WebkitBackgroundClip: "text",
                   WebkitTextFillColor: "transparent"
                 }}
@@ -438,7 +435,7 @@ const Hero3D = ({ onGetStarted }) => {
               </span>
             </h1>
 
-            <p className="lead text-secondary mb-4" style={{ fontSize: "1.15rem", lineHeight: 1.65 }}>
+            <p className="hero-subtitle mb-4">
               A team of highly experienced experts and skilled developers to provide you with any kind
               of web and mobile development services. We build complete, scale-ready software from
               scratch.
@@ -466,27 +463,23 @@ const Hero3D = ({ onGetStarted }) => {
               </span>
             </div>
 
-            {/* CTA Button matching Screenshot 1 ("Get Started") */}
+            {/* CTA Buttons: Standardized Medium Size (Same Width & Height) */}
             <div className="d-flex flex-wrap align-items-center gap-3">
-              <Button
-                variant="primary"
-                size="lg"
-                className="rounded-3 px-4 py-3 fw-bold border-0 shadow-sm d-flex align-items-center gap-2"
-                style={{ background: "#0284c7" }}
+              <button
+                type="button"
+                className="btn-krsh-primary"
                 onClick={onGetStarted}
               >
                 <span>Get Started</span>
-                <ArrowRight size={18} />
-              </Button>
+                <ArrowRight size={16} />
+              </button>
 
-              <Button
-                variant="outline-secondary"
-                size="lg"
+              <a
                 href="#services"
-                className="rounded-3 px-4 py-3 fw-semibold border-2"
+                className="btn-krsh-secondary"
               >
-                Explore Services
-              </Button>
+                <span>Explore Services</span>
+              </a>
             </div>
 
             {/* Trust Markers */}

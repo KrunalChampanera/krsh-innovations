@@ -270,18 +270,23 @@ const ServicesSection = ({ onSelectServiceForQuote }) => {
                 ))}
               </div>
             </Modal.Body>
-            <Modal.Footer className="border-0 pt-0">
-              <Button variant="outline-secondary" onClick={handleCloseModal} className="rounded-pill px-4">
+            <Modal.Footer className="border-0 pt-0 gap-2">
+              <button
+                type="button"
+                onClick={handleCloseModal}
+                className="btn-krsh-secondary"
+                style={{ minWidth: "120px", height: "42px", fontSize: "0.88rem" }}
+              >
                 Close
-              </Button>
-              <Button
-                variant="primary"
-                className="rounded-pill px-4 fw-semibold border-0"
-                style={{ background: "#00a2ea" }}
+              </button>
+              <button
+                type="button"
+                className="btn-krsh-primary"
+                style={{ height: "42px", fontSize: "0.88rem" }}
                 onClick={() => handleQuoteClick(selectedService)}
               >
                 Request Quote for This Service
-              </Button>
+              </button>
             </Modal.Footer>
           </>
         )}
