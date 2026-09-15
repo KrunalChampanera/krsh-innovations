@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Container, Row, Col, Form, Button, Alert } from "react-bootstrap";
-import { Layers, Mail, Send, Heart, Shield, CheckCircle2 } from "lucide-react";
+import { Layers, Mail, Send } from "lucide-react";
 
-const Footer = () => {
+const Footer = ({ onOpenAdmin }) => {
   const [email, setEmail] = useState("");
   const [subStatus, setSubStatus] = useState(null);
 
@@ -31,7 +31,7 @@ const Footer = () => {
           {/* Brand & Mission */}
           <Col lg={4} md={6}>
             <div className="d-flex align-items-center gap-2 mb-3">
-              <div className="brand-badge">
+              <div className="brand-badge" style={{ background: "#00a2ea" }}>
                 <Layers size={20} className="text-white" />
                 <span style={{ fontSize: "1.15rem" }}>Krsh.Innovations</span>
               </div>
@@ -61,11 +61,19 @@ const Footer = () => {
             </h6>
             <ul className="list-unstyled small text-secondary d-flex flex-column gap-2 mb-0">
               <li><a href="#home" className="text-secondary text-decoration-none hover-white">Home</a></li>
-              <li><a href="#services" className="text-secondary text-decoration-none hover-white">Our Services</a></li>
+              <li><a href="#services" className="text-secondary text-decoration-none hover-white">Services</a></li>
+              <li><a href="#portfolio" className="text-secondary text-decoration-none hover-white">Case Studies</a></li>
               <li><a href="#tech-stack" className="text-secondary text-decoration-none hover-white">Technologies</a></li>
-              <li><a href="#why-us" className="text-secondary text-decoration-none hover-white">Why Choose Us</a></li>
-              <li><a href="#estimator" className="text-secondary text-decoration-none hover-white">Cost Estimator</a></li>
+              <li><a href="#why-us" className="text-secondary text-decoration-none hover-white">Why Us</a></li>
               <li><a href="#contact" className="text-secondary text-decoration-none hover-white">Contact Us</a></li>
+              <li>
+                <button
+                  onClick={onOpenAdmin}
+                  className="btn btn-link text-info text-decoration-none p-0 small fw-semibold text-start"
+                >
+                  🔐 Admin Portal
+                </button>
+              </li>
             </ul>
           </Col>
 
@@ -90,7 +98,7 @@ const Footer = () => {
               Stay Connected
             </h6>
             <p className="text-secondary small mb-3">
-              Subscribe to Krsh.Innovations technical articles, architecture teardowns, and startup updates.
+              Subscribe to Krsh.Innovations technical updates and startup releases.
             </p>
 
             {subStatus && (
@@ -112,7 +120,7 @@ const Footer = () => {
                 type="submit"
                 variant="primary"
                 className="px-3 rounded-3 border-0"
-                style={{ background: "var(--krsh-gradient-blue)" }}
+                style={{ background: "#00a2ea" }}
               >
                 <Send size={16} />
               </Button>
@@ -129,7 +137,12 @@ const Footer = () => {
           <div className="d-flex align-items-center gap-3">
             <span>Built with React 18, Node.js & MySQL</span>
             <span>•</span>
-            <span className="text-info">Entrepreneurial IT Startup</span>
+            <button
+              onClick={onOpenAdmin}
+              className="btn btn-link text-secondary text-decoration-none p-0 small"
+            >
+              Admin Dashboard
+            </button>
           </div>
         </div>
       </Container>

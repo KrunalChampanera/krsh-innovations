@@ -8,30 +8,37 @@ import TechStackSection from "./components/TechStackSection";
 import WhyChooseUs from "./components/WhyChooseUs";
 import ProjectEstimator from "./components/ProjectEstimator";
 import ContactSection from "./components/ContactSection";
-import AdminPanelModal from "./components/AdminPanelModal";
+import AdminDashboard from "./components/AdminDashboard";
 import Footer from "./components/Footer";
 
 function App() {
-  const [showAdminModal, setShowAdminModal] = useState(false);
+  const [currentView, setCurrentView] = useState(() => {
+    return window.location.hash === "#admin" ? "admin" : "site";
+  });
   const [preselectedService, setPreselectedService] = useState("");
   const [dbStatus, setDbStatus] = useState(null);
-  const [newInquiriesCount, setNewInquiriesCount] = useState(0);
   const [galleryRefreshTrigger, setGalleryRefreshTrigger] = useState(0);
 
-  // Poll backend health & inquiries count
+  // Sync with window hash changes
+  useEffect(() => {
+    const handleHashChange = () => {
+      if (window.location.hash === "#admin") {
+        setCurrentView("admin");
+      } else {
+        setCurrentView("site");
+      }
+    };
+    window.addEventListener("hashchange", handleHashChange);
+    return () => window.removeEventListener("hashchange", handleHashChange);
+  }, []);
+
+  // Poll backend health status
   const checkStatus = async () => {
     try {
       const res = await fetch("/api/health");
       const data = await res.json();
       if (data && data.database) {
         setDbStatus(data.database);
-      }
-
-      const inqRes = await fetch("/api/inquiries");
-      const inqData = await inqRes.json();
-      if (inqData && inqData.data) {
-        const newCount = inqData.data.filter((i) => (i.status || "new") === "new").length;
-        setNewInquiriesCount(newCount);
       }
     } catch (err) {
       console.log("Backend offline or booting:", err.message);
@@ -40,9 +47,20 @@ function App() {
 
   useEffect(() => {
     checkStatus();
-    const interval = setInterval(checkStatus, 20000);
+    const interval = setInterval(checkStatus, 30000);
     return () => clearInterval(interval);
   }, []);
+
+  const handleOpenAdmin = () => {
+    window.location.hash = "#admin";
+    setCurrentView("admin");
+  };
+
+  const handleBackToSite = () => {
+    window.location.hash = "";
+    setCurrentView("site");
+    setGalleryRefreshTrigger((prev) => prev + 1);
+  };
 
   const handleScrollToEstimator = (serviceTitle) => {
     if (serviceTitle) {
@@ -61,14 +79,48 @@ function App() {
     }
   };
 
+  // 1. IF ADMIN VIEW: Render Dedicated Full-Screen Admin Panel
+  if (currentView === "admin") {
+    return (
+      <AdminDashboard
+        onBackToSite={handleBackToSite}
+        dbStatus={dbStatus}
+      />
+    );
+  }
+
+  // 2. IF CLIENT VIEW: Render Clean, Perfect Public Website
   return (
     <div className="app-container min-vh-100 d-flex flex-column">
-      {/* Top Glassmorphic Navigation Bar */}
+      {/* Top Floating Admin Quick Switch Strip (Discreet) */}
+      <div
+        className="bg-dark text-white-50 px-3 py-1 d-flex justify-content-between align-items-center small border-bottom border-secondary"
+        style={{ fontSize: "11px", zIndex: 1050 }}
+      >
+        <div className="d-flex align-items-center gap-2">
+          <span
+            className={`rounded-circle ${dbStatus?.isMySQL ? "bg-success" : "bg-primary"}`}
+            style={{ width: "6px", height: "6px" }}
+          ></span>
+          <span>{dbStatus?.isMySQL ? "MySQL 8.0 Active" : "Local Storage Active"}</span>
+          <span>•</span>
+          <span>Krsh.Innovations@gmail.com</span>
+        </div>
+
+        <div>
+          <button
+            onClick={handleOpenAdmin}
+            className="btn btn-link text-info text-decoration-none p-0 fw-semibold"
+            style={{ fontSize: "11px" }}
+          >
+            🔐 Open Backend Admin Panel &rarr;
+          </button>
+        </div>
+      </div>
+
+      {/* Top Glassmorphic Navigation Bar - Clean Single-Line */}
       <NavigationBar
-        onOpenEstimator={() => handleScrollToEstimator()}
-        onOpenAdmin={() => setShowAdminModal(true)}
-        dbStatus={dbStatus}
-        inquiriesCount={newInquiriesCount}
+        onOpenAdmin={handleOpenAdmin}
       />
 
       {/* Hero Section with Upgraded Interactive 3D Three.js Visuals */}
@@ -82,7 +134,7 @@ function App() {
 
       {/* Dynamic Case Studies & Project Gallery */}
       <PortfolioGallery
-        onOpenAdmin={() => setShowAdminModal(true)}
+        onOpenAdmin={handleOpenAdmin}
         refreshTrigger={galleryRefreshTrigger}
       />
 
@@ -99,18 +151,7 @@ function App() {
       <ContactSection />
 
       {/* Footer */}
-      <Footer />
-
-      {/* Dedicated Backend Admin Panel (Gallery Photos & Inquiries Management) */}
-      <AdminPanelModal
-        show={showAdminModal}
-        onHide={() => {
-          setShowAdminModal(false);
-          checkStatus();
-        }}
-        onGalleryUpdated={() => setGalleryRefreshTrigger((prev) => prev + 1)}
-        dbStatus={dbStatus}
-      />
+      <Footer onOpenAdmin={handleOpenAdmin} />
     </div>
   );
 }

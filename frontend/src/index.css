@@ -10,8 +10,7 @@
   --krsh-card-border: #e2e8f0;
   --krsh-text-main: #1e293b;
   --krsh-text-muted: #64748b;
-  --krsh-blue-hover: #00a2ea;
-  --krsh-gradient-blue: linear-gradient(135deg, #00a2ea 0%, #0284c7 100%);
+  --krsh-blue: #00a2ea;
 }
 
 * {
@@ -35,7 +34,7 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Glassmorphism Header */
 .navbar-glass {
-  background: rgba(255, 255, 255, 0.95);
+  background: rgba(255, 255, 255, 0.98);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
   border-bottom: 1px solid rgba(226, 232, 240, 0.85);
@@ -43,7 +42,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .brand-badge {
-  background: linear-gradient(135deg, #00a2ea 0%, #2563eb 100%);
+  background: #00a2ea;
   color: #ffffff;
   padding: 6px 14px;
   border-radius: 8px;
@@ -53,6 +52,67 @@ h1, h2, h3, h4, h5, h6 {
   display: inline-flex;
   align-items: center;
   gap: 8px;
+  text-decoration: none;
+}
+
+.brand-text {
+  font-size: 1.25rem;
+  letter-spacing: -0.5px;
+  white-space: nowrap !important;
+  color: #ffffff;
+}
+
+/* Navbar Navigation Links - STRICT SINGLE LINE (NO WRAPPING) */
+.main-nav-links {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-wrap: nowrap;
+}
+
+@media (min-width: 1200px) {
+  .main-nav-links {
+    gap: 1.2rem;
+  }
+}
+
+.nav-item-link,
+.nav-item-link-dropdown .dropdown-toggle {
+  white-space: nowrap !important;
+  color: #1e293b !important;
+  font-weight: 500 !important;
+  font-size: 0.95rem !important;
+  padding: 0.45rem 0.55rem !important;
+  transition: color 0.2s ease;
+  display: inline-block !important;
+}
+
+@media (min-width: 1200px) {
+  .nav-item-link,
+  .nav-item-link-dropdown .dropdown-toggle {
+    padding: 0.5rem 0.85rem !important;
+    font-size: 1rem !important;
+  }
+}
+
+.nav-item-link:hover,
+.nav-item-link-dropdown .dropdown-toggle:hover {
+  color: #00a2ea !important;
+}
+
+.btn-get-started {
+  white-space: nowrap !important;
+  background-color: #00a2ea !important;
+  padding: 8px 22px !important;
+  border-radius: 6px !important;
+  font-size: 0.95rem !important;
+  transition: all 0.2s ease;
+}
+
+.btn-get-started:hover {
+  background-color: #0088cc !important;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 162, 234, 0.35) !important;
 }
 
 /* Section Title Stylings matching Screenshot 2 & 4 */
@@ -136,12 +196,6 @@ h1, h2, h3, h4, h5, h6 {
 .service-card:hover p,
 .service-card:hover .btn-readmore {
   color: #ffffff !important;
-}
-
-.service-card:hover .badge-tech {
-  background: rgba(255, 255, 255, 0.2) !important;
-  color: #ffffff !important;
-  border-color: rgba(255, 255, 255, 0.3) !important;
 }
 
 .service-card * {
